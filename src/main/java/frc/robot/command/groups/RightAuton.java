@@ -1,8 +1,8 @@
-package org.usfirst.frc.team5263.robot.command.groups;
+package frc.robot.command.groups;
 
-import org.usfirst.frc.team5263.robot.commands.DriveTo;
-import org.usfirst.frc.team5263.robot.commands.FlipBucket;
-import org.usfirst.frc.team5263.robot.commands.RotatePID;
+import frc.robot.commands.DriveTo;
+import frc.robot.commands.FlipBucket;
+import frc.robot.commands.RotatePID;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;

@@ -1,8 +1,8 @@
-package org.usfirst.frc.team5263.robot.commands;
+package frc.robot.commands;
 
 
-import org.usfirst.frc.team5263.robot.Robot;
-import org.usfirst.frc.team5263.robot.subsystems.DriveTrain;
+import frc.robot.Robot;
+import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 

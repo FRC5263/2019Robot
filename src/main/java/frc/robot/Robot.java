@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 
-package org.usfirst.frc.team5263.robot;
+package frc.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -17,29 +17,29 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team5263.robot.command.groups.BreakBaseline;
-import org.usfirst.frc.team5263.robot.command.groups.CenterAuton;
-import org.usfirst.frc.team5263.robot.command.groups.DriveToShape;
-import org.usfirst.frc.team5263.robot.command.groups.LeftAuton;
-import org.usfirst.frc.team5263.robot.command.groups.LeftAutonExtraSucc;
-import org.usfirst.frc.team5263.robot.command.groups.LeftONLYLEFT;
-import org.usfirst.frc.team5263.robot.command.groups.RightAuton;
-import org.usfirst.frc.team5263.robot.command.groups.SwitchAuton;
-import org.usfirst.frc.team5263.robot.command.groups.rightONLYRIGHT;
-import org.usfirst.frc.team5263.robot.commands.DriveTo;
-import org.usfirst.frc.team5263.robot.commands.DriveUntil;
-import org.usfirst.frc.team5263.robot.commands.DriverOperated;
-import org.usfirst.frc.team5263.robot.commands.Lift;
-import org.usfirst.frc.team5263.robot.commands.RotatePID;
-import org.usfirst.frc.team5263.robot.commands.Rotation;
-import org.usfirst.frc.team5263.robot.commands.VisionDrive;
-import org.usfirst.frc.team5263.robot.commands.Wait;
-import org.usfirst.frc.team5263.robot.subsystems.BucketArm;
-import org.usfirst.frc.team5263.robot.subsystems.CubeIntake;
-import org.usfirst.frc.team5263.robot.subsystems.DriveTrain;
-//import org.usfirst.frc.team5263.robot.subsystems.Pneumatics;
-//import org.usfirst.frc.team5263.robot.subsystems.ExampleSubsystem;
-import org.usfirst.frc.team5263.robot.subsystems.Vision;
+import frc.robot.command.groups.BreakBaseline;
+import frc.robot.command.groups.CenterAuton;
+import frc.robot.command.groups.DriveToShape;
+import frc.robot.command.groups.LeftAuton;
+import frc.robot.command.groups.LeftAutonExtraSucc;
+import frc.robot.command.groups.LeftONLYLEFT;
+import frc.robot.command.groups.RightAuton;
+import frc.robot.command.groups.SwitchAuton;
+import frc.robot.command.groups.rightONLYRIGHT;
+import frc.robot.commands.DriveTo;
+import frc.robot.commands.DriveUntil;
+import frc.robot.commands.DriverOperated;
+import frc.robot.commands.Lift;
+import frc.robot.commands.RotatePID;
+import frc.robot.commands.Rotation;
+import frc.robot.commands.VisionDrive;
+import frc.robot.commands.Wait;
+import frc.robot.subsystems.BucketArm;
+import frc.robot.subsystems.CubeIntake;
+import frc.robot.subsystems.DriveTrain;
+//import frc.robot.subsystems.Pneumatics;
+//import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Vision;
 
 /**
  * The VM is configured to automatically run this class, and to call the

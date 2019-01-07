@@ -1,7 +1,7 @@
-package org.usfirst.frc.team5263.robot.command.groups;
+package frc.robot.command.groups;
 
-import org.usfirst.frc.team5263.robot.commands.Lift;
-import org.usfirst.frc.team5263.robot.commands.Suck;
+import frc.robot.commands.Lift;
+import frc.robot.commands.Suck;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

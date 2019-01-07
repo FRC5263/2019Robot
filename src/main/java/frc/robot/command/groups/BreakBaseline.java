@@ -1,6 +1,6 @@
-package org.usfirst.frc.team5263.robot.command.groups;
+package frc.robot.command.groups;
 
-import org.usfirst.frc.team5263.robot.commands.DriveTo;
+import frc.robot.commands.DriveTo;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

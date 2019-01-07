@@ -1,6 +1,6 @@
-package org.usfirst.frc.team5263.robot.command.groups;
+package frc.robot.command.groups;
 
-import org.usfirst.frc.team5263.robot.commands.FlipBucket;
+import frc.robot.commands.FlipBucket;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

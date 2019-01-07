@@ -5,9 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team5263.robot;
+package frc.robot;
 
-import org.usfirst.frc.team5263.robot.command.groups.CubeIntakeAuton;
+import frc.robot.command.groups.CubeIntakeAuton;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
