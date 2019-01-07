@@ -1,4 +1,4 @@
-package org.usfirst.frc.team5263.robot.subsystems;
+package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.ArrayList;
 
-import org.usfirst.frc.team5263.robot.RobotMap;
+import frc.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Spark;

@@ -1,6 +1,6 @@
-package org.usfirst.frc.team5263.robot.subsystems;
+package frc.robot.subsystems;
 
-import org.usfirst.frc.team5263.robot.RobotMap;
+import frc.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Victor;
