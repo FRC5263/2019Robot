@@ -38,6 +38,7 @@ import frc.robot.commands.Wait;
 import frc.robot.subsystems.BucketArm;
 import frc.robot.subsystems.CubeIntake;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Pneumatics;
 //import frc.robot.subsystems.Pneumatics;
 //import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Vision;
@@ -56,6 +57,7 @@ public class Robot extends TimedRobot {
 	public static final Vision myVision = new Vision();
 	public static final BucketArm myBucketArm = new BucketArm();
 	public static final CubeIntake myCubeIntake = new CubeIntake();
+	public static final Pneumatics myPnuematics = new Pneumatics();
 	
 	public static OI m_oi;
 	Command teleop = new DriverOperated();
