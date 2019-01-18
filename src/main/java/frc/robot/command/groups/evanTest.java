@@ -10,14 +10,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class evanTest extends CommandGroup {
 
     public evanTest() {
-        addSequential(new DriveTo(8, .3, 0, 5));
-        addSequential(new RotatePID(90));
-        addSequential(new DriveTo(8, .3, 90, 5));
-        addSequential(new RotatePID(180));
-        addSequential(new DriveTo(8, .3, 180, 5));
-        addSequential(new RotatePID(270));
-        addSequential(new DriveTo(8, .3, 270, 5));
+       // addSequential(new DriveTo(5, .15, 0, 5));
+        //addSequential(new RotatePID(360));
         addSequential(new RotatePID(360));
-        addSequential(new DriveTo(8, .3, 360, 5));
+        //addSequential(new RotatePID(360));
+       // addSequential(new DriveTo(3, .15, 135, 5));
+       // addSequential(new RotatePID(0));
+       // addSequential(new DriveTo(3, .15, 0, 5));
+       // addSequential(new RotatePID(135));
+       // addSequential(new DriveTo(5, .15, 135, 5));
+        //addSequential(new RotatePID(360));
+        //addSequential(new DriveTo(8, .3, 360, 5));
     }
 }

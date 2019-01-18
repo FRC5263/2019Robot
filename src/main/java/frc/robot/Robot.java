@@ -26,6 +26,7 @@ import frc.robot.command.groups.LeftONLYLEFT;
 import frc.robot.command.groups.RightAuton;
 import frc.robot.command.groups.SwitchAuton;
 import frc.robot.command.groups.rightONLYRIGHT;
+import frc.robot.command.groups.evanTest;
 import frc.robot.commands.DriveTo;
 import frc.robot.commands.DriveUntil;
 import frc.robot.commands.DriverOperated;
@@ -63,7 +64,7 @@ public class Robot extends TimedRobot {
 	
 	
 	enum commandName{
-		Left, Center, Right, Wait, Succ, Base, leftonly, rightonly;
+		Left, Center, Right, Wait, Succ, Base, leftonly, rightonly, test;
 	}
 	
 	/**
@@ -85,6 +86,7 @@ public class Robot extends TimedRobot {
 		m_chooser.addObject("Succ", commandName.Succ);
 		m_chooser.addObject("RIGHTONLY RIGHT", commandName.rightonly);
 		m_chooser.addObject("LEFTONLY LEFT", commandName.leftonly);
+		m_chooser.addObject("Test", commandName.test);
 		SmartDashboard.putData("Auto mode", m_chooser);
 		LiveWindow.add(DriveTrain.sharedInstance().turnController);
 		LiveWindow.add(DriveTrain.sharedInstance().driveController);
@@ -158,6 +160,8 @@ public class Robot extends TimedRobot {
 		case rightonly:
 			m_autonomousCommand = new rightONLYRIGHT();
 			break;
+		case test:
+			m_autonomousCommand = new evanTest();
 		default:
 			break;
 		}
