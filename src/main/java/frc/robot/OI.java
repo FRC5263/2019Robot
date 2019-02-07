@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import frc.robot.command.groups.CubeIntakeAuton;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -67,8 +65,8 @@ public class OI {
 	
 	public boolean getButtonMain(ButtonName buttonName) {
 		return driverGamepad.getRawButton(buttonName.value);
-	}
+  }
+  
 	public OI() {
-		rightBumper.whenPressed(new CubeIntakeAuton());
 	}
 }

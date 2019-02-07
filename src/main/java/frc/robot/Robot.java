@@ -5,231 +5,139 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-
 package frc.robot;
 
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import frc.robot.command.groups.BreakBaseline;
-import frc.robot.command.groups.CenterAuton;
-import frc.robot.command.groups.DriveToShape;
-import frc.robot.command.groups.LeftAuton;
-import frc.robot.command.groups.LeftAutonExtraSucc;
-import frc.robot.command.groups.LeftONLYLEFT;
-import frc.robot.command.groups.RightAuton;
-import frc.robot.command.groups.SwitchAuton;
-import frc.robot.command.groups.rightONLYRIGHT;
-import frc.robot.command.groups.evanTest;
-import frc.robot.commands.DriveTo;
-import frc.robot.commands.DriveUntil;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.commands.DriverOperated;
-import frc.robot.commands.Lift;
-import frc.robot.commands.RotatePID;
-import frc.robot.commands.Rotation;
-import frc.robot.commands.VisionDrive;
-import frc.robot.commands.Wait;
-import frc.robot.subsystems.BucketArm;
-import frc.robot.subsystems.CubeIntake;
-import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Pneumatics;
-//import frc.robot.subsystems.Pneumatics;
-//import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.Vision;
+
+import frc.robot.Bot;
+import frc.robot.Bots;
 
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
  * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the build.properties file in the
+ * creating this project, you must also update the build.gradle file in the
  * project.
  */
 public class Robot extends TimedRobot {
-//	public static final ExampleSubsystem kExampleSubsystem
-//			= new ExampleSubsystem();
-	public static final DriveTrain myDrive = DriveTrain.sharedInstance();
-	public static final Vision myVision = new Vision();
-	public static final BucketArm myBucketArm = new BucketArm();
-	public static final CubeIntake myCubeIntake = new CubeIntake();
-	public static final Pneumatics myPnuematics = new Pneumatics();
-	
-	public static OI m_oi;
-	Command teleop = new DriverOperated();
-	Command m_autonomousCommand;
-	SendableChooser<commandName> m_chooser = new SendableChooser<>();
-	
-	
-	enum commandName{
-		Left, Center, Right, Wait, Succ, Base, leftonly, rightonly, test;
-	}
-	
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
-	@Override
-	public void robotInit() {
-		
-		//CameraServer.getInstance().startAutomaticCapture();
-		
-		m_oi = new OI();
-		
-		m_chooser.addDefault("Default Auto", commandName.Wait);
-		m_chooser.addObject("Left Auton", commandName.Left);
-		m_chooser.addObject("Right Auton", commandName.Right);
-		m_chooser.addObject("Center Auton", commandName.Center);
-		m_chooser.addObject("Base", commandName.Base);
-		m_chooser.addObject("Succ", commandName.Succ);
-		m_chooser.addObject("RIGHTONLY RIGHT", commandName.rightonly);
-		m_chooser.addObject("LEFTONLY LEFT", commandName.leftonly);
-		m_chooser.addObject("Test", commandName.test);
-		SmartDashboard.putData("Auto mode", m_chooser);
-		LiveWindow.add(DriveTrain.sharedInstance().turnController);
-		LiveWindow.add(DriveTrain.sharedInstance().driveController);
-		
-		
-	}
 
-	/**	
-	 * This function is called once each time the robot enters Disabled mode.
-	 * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
-	 */
-	@Override
-	public void disabledInit() {
+  Bot robot = Bots.createCompetitionBot();
 
-	}
+  public static OI m_oi;
 
-	@Override
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-	}
 
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
-	 *
-	 * <p>You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
-	 */
-	@Override
-	public void autonomousInit() {
+	Command teleop = new DriverOperated(robot);
+
+  Command m_autonomousCommand;
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+  /**
+   * This function is run when the robot is first started up and should be
+   * used for any initialization code.
+   */
+  @Override
+  public void robotInit() {
+    m_oi = new OI();
+    // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
+    // chooser.addOption("My Auto", new MyAutoCommand());
+    SmartDashboard.putData("Auto mode", m_chooser);
+  }
+
+  /**
+   * This function is called every robot packet, no matter the mode. Use
+   * this for items like diagnostics that you want ran during disabled,
+   * autonomous, teleoperated and test.
+   *
+   * <p>This runs after the mode specific periodic functions, but before
+   * LiveWindow and SmartDashboard integrated updating.
+   */
+  @Override
+  public void robotPeriodic() {
+  }
+
+  /**
+   * This function is called once each time the robot enters Disabled mode.
+   * You can use it to reset any subsystem information you want to clear when
+   * the robot is disabled.
+   */
+  @Override
+  public void disabledInit() {
 		teleop.cancel();
-		DriveTrain.sharedInstance().reset();
-		//very temporary, yell at me later
-		Vision.setCamAxisX(0.5);
-		Vision.setCamAxisY(0.5);
-		System.out.println("autonomous init");
-		if (m_autonomousCommand != null) {
-			System.out.println("Cancelling existing command");
-			m_autonomousCommand.cancel();
-		}
+  }
 
-		m_autonomousCommand = null;
-		
-		switch (m_chooser.getSelected()) {
-		case Right:
-			m_autonomousCommand = new SwitchAuton("R");
-			break;
-		case Left:
-			m_autonomousCommand = new SwitchAuton("L");
-			break;
-		case Center:
-			m_autonomousCommand = new SwitchAuton("C");
-			break;
-		case Wait:
-			m_autonomousCommand = new Wait(1000);
-			break;
-		case Succ:
-			m_autonomousCommand = new LeftAutonExtraSucc();
-			break;
-		case Base:
-			m_autonomousCommand = new BreakBaseline();
-			break;
-		case leftonly:
-			m_autonomousCommand = new LeftONLYLEFT();
-			break;
-		case rightonly:
-			m_autonomousCommand = new rightONLYRIGHT();
-			break;
-		case test:
-			m_autonomousCommand = new evanTest();
-		default:
-			break;
-		}
+  @Override
+  public void disabledPeriodic() {
+    Scheduler.getInstance().run();
+  }
 
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-		
-		
-		if (m_autonomousCommand != null) {
-			System.out.println("selected command is " + m_autonomousCommand.getName());
-			m_autonomousCommand.start();
-		} else {
-			System.out.println("selected command is NULL, running NO AUTON");
-		}
-	}
+  /**
+   * This autonomous (along with the chooser code above) shows how to select
+   * between different autonomous modes using the dashboard. The sendable
+   * chooser code works with the Java SmartDashboard. If you prefer the
+   * LabVIEW Dashboard, remove all of the chooser code and uncomment the
+   * getString code to get the auto name from the text box below the Gyro
+   *
+   * <p>You can add additional auto modes by adding additional commands to the
+   * chooser code above (like the commented example) or additional comparisons
+   * to the switch structure below with additional strings & commands.
+   */
+  @Override
+  public void autonomousInit() {
+		teleop.cancel();
+    m_autonomousCommand = m_chooser.getSelected();
 
-	/**
-	 * This function is called periodically during autonomous.
-	 */
-	@Override
-	public void autonomousPeriodic() {
-		Vision.setCamAxisX(0.5);
-		Vision.setCamAxisY(0.5);
-		Scheduler.getInstance().run();
-	}
+    /*
+     * String autoSelected = SmartDashboard.getString("Auto Selector",
+     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
+     * = new MyAutoCommand(); break; case "Default Auto": default:
+     * autonomousCommand = new ExampleCommand(); break; }
+     */
 
-	@Override
-	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		//Vision.setCamAxisX(0);
-		//Vision.setCamAxisY(0);
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.cancel();
-		}
+    // schedule the autonomous command (example)
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.start();
+    }
+  }
+
+  /**
+   * This function is called periodically during autonomous.
+   */
+  @Override
+  public void autonomousPeriodic() {
+    Scheduler.getInstance().run();
+  }
+
+  @Override
+  public void teleopInit() {
+    // This makes sure that the autonomous stops running when
+    // teleop starts running. If you want the autonomous to
+    // continue until interrupted by another command, remove
+    // this line or comment it out.
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }
+
 		teleop.start();
-	}
+  }
 
-	/**
-	 * This function is called periodically during operator control.
-	 */
-	@Override
-	public void teleopPeriodic() {
-		//Vision.setCamAxisX(0);
-		//Vision.setCamAxisY(0);
-		Scheduler.getInstance().run();
-		myVision.VisionPeriodic();
-	}
+  /**
+   * This function is called periodically during operator control.
+   */
+  @Override
+  public void teleopPeriodic() {
+    Scheduler.getInstance().run();
+  }
 
-	/**
-	 * This function is called periodically during test mode.
-	 */
-	@Override
-	public void testPeriodic() {		
-		
-	}
-
-	@Override
-	public void robotPeriodic() {
-		DriveTrain.sharedInstance().displayData();
-		CubeIntake.displayData();
-	}
+  /**
+   * This function is called periodically during test mode.
+   */
+  @Override
+  public void testPeriodic() {
+  }
 }
