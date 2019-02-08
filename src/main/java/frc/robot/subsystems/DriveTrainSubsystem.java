@@ -64,16 +64,16 @@ public class DriveTrainSubsystem extends Subsystem {
             return -1;
     }
 
-    public double getLeftEncoder() {
+    public int getLeftEncoder() {
         if (leftEncoder != null)
-            return (double) leftEncoder.get();
+            return leftEncoder.get();
         else
             return -1;
     }
 
-    public double getRightEncoder() {
+    public int getRightEncoder() {
         if (rightEncoder != null)
-            return (double) rightEncoder.get();
+            return rightEncoder.get();
         else
             return -1;
     }
