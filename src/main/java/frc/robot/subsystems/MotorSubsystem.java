@@ -14,21 +14,22 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * Add your docs here.
  */
 public class MotorSubsystem extends Subsystem {
-  
+
   SpeedController motor;
   double scalarPower = 1.0;
 
-  public MotorSubsystem(SpeedController motor){
+  public MotorSubsystem(SpeedController motor) {
     this.motor = motor;
   }
 
-  public MotorSubsystem(SpeedController motor, double scalarPower){
+  public MotorSubsystem(SpeedController motor, double scalarPower) {
     this.motor = motor;
     this.scalarPower = scalarPower;
   }
 
-  public void powerMotor(double power){
-    this.motor.set(power);
+  public void powerMotor(double power) {
+    if (this.motor != null)
+      this.motor.set(power);
   }
 
   @Override
