@@ -13,9 +13,14 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriverOperated;
+import frc.robot.subsystems.DriveTrainSubsystem;
 
 import frc.robot.Bot;
 import frc.robot.Bots;
+
+//commands
+import frc.robot.commands.DriveTo;
+import frc.robot.commands.FollowPath;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,6 +32,10 @@ import frc.robot.Bots;
 public class Robot extends TimedRobot {
 
   Bot robot = Bots.createCompetitionBot();
+  DriveTrainSubsystem drivetrain;
+
+  Command drive5 = new DriveTo(robot, 5, 0.3, 10);
+  Command pathy = new FollowPath(robot);
 
   public static OI m_oi;
 
@@ -46,6 +55,11 @@ public class Robot extends TimedRobot {
     // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
+    try {
+      drivetrain = (DriveTrainSubsystem) robot.getSubsystem(DriveTrainSubsystem.class);
+    } catch (Exception e) {
+      drivetrain = null;
+    } 
   }
 
   /**
@@ -58,6 +72,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    drivetrain.putEncodersOnDash();
+    drivetrain.putCompassOnDash();
   }
 
   /**
@@ -102,6 +118,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
     }
+
+    // drive5.start();
+    pathy.start();
   }
 
   /**
