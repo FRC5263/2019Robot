@@ -30,8 +30,8 @@ public class Bots {
                 new DriveTrainSubsystem(
                     new SpeedControllerGroup(new WPI_TalonSRX(2), new WPI_TalonSRX(3)),
                     new SpeedControllerGroup(new WPI_TalonSRX(4), new WPI_TalonSRX(5)),
-                    null, // new Encoder(-1, -1),
-                    null, // new Encoder(-1, -1),
+                    new Encoder(2, 3),
+                    new Encoder(0, 1),
                     null, // new Ultrasonic(-1, -1),
                     new AHRS(SPI.Port.kMXP)
                     )
