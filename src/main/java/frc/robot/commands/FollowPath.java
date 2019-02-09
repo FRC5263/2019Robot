@@ -24,6 +24,8 @@ public class FollowPath extends Command {
   private DriveTrainSubsystem drivetrain;
   private boolean finishEarly = false;
 
+  private boolean isFinished = false;
+
   private EncoderFollower m_left_follower;
   private EncoderFollower m_right_follower;
   
@@ -44,7 +46,7 @@ public class FollowPath extends Command {
 
   private static final int k_gyro_port = 0;
 
-  private static final String k_path_name = "test";
+  private static final String k_path_name = "test1";
 
   public FollowPath(Bot robot) {
     this.robot = robot;
@@ -57,10 +59,14 @@ public class FollowPath extends Command {
 
   // Called just before this Command runs the first time
   @Override
-  protected void initialize() {
+  protected void initialize() {;
 
-    Trajectory left_trajectory = PathfinderFRC.getTrajectory(k_path_name + ".left");
-    Trajectory right_trajectory = PathfinderFRC.getTrajectory(k_path_name + ".right");
+    drivetrain.resetCompass();
+    drivetrain.resetEncoders();
+
+    //REVIEW: MAKE SURE TO FIX THIS CODE WITH PATHFINDER 3.1 !!! SWAP LEFT AND RIGHT
+    Trajectory left_trajectory = PathfinderFRC.getTrajectory(k_path_name + ".right");
+    Trajectory right_trajectory = PathfinderFRC.getTrajectory(k_path_name + ".left");
 
     m_left_follower = new EncoderFollower(left_trajectory);
     m_right_follower = new EncoderFollower(right_trajectory);
@@ -80,6 +86,8 @@ public class FollowPath extends Command {
   private void followPath() {
     if (m_left_follower.isFinished() || m_right_follower.isFinished()) {
       m_follower_notifier.stop();
+      drivetrain.drive(0, 0);
+      isFinished = true;
     } else {
       double left_speed = m_left_follower.calculate(drivetrain.getLeftEncoder());
       double right_speed = m_right_follower.calculate(drivetrain.getRightEncoder());
@@ -100,17 +108,24 @@ public class FollowPath extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return finishEarly || isFinished;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+
+    m_follower_notifier.stop();
+    this.drivetrain.drive(0, 0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+
+    m_follower_notifier.stop();    
+    this.drivetrain.drive(0, 0);
+
   }
 }
