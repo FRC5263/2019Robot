@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 
+import edu.wpi.first.wpilibj.Spark;
+
 
 /**
  * Storage of Different Bot configurations.
@@ -32,6 +34,21 @@ public class Bots {
                     new SpeedControllerGroup(new WPI_TalonSRX(4), new WPI_TalonSRX(5)),
                     new Encoder(2, 3),
                     new Encoder(0, 1),
+                    null, // new Ultrasonic(-1, -1),
+                    new AHRS(SPI.Port.kMXP)
+                    )
+            }
+        );
+    }
+
+    public static Bot createTestBotOne() {
+        return new Bot(
+            new Subsystem[]{
+                new DriveTrainSubsystem(
+                    new Spark(0),
+                    new Spark(1),
+                    new Encoder(0, 1),
+                    new Encoder(2, 3),
                     null, // new Ultrasonic(-1, -1),
                     new AHRS(SPI.Port.kMXP)
                     )
