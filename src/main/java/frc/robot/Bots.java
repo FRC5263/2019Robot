@@ -34,7 +34,8 @@ public class Bots {
                     new SpeedControllerGroup(new WPI_TalonSRX(4), new WPI_TalonSRX(5)),
                     new Encoder(2, 3),
                     new Encoder(0, 1),
-                    null, // new Ultrasonic(-1, -1),
+                    null, 
+                     // new Ultrasonic(-1, -1),
                     new AHRS(SPI.Port.kMXP)
                     )
             }
@@ -49,7 +50,7 @@ public class Bots {
                     new Spark(1),
                     new Encoder(0, 1),
                     new Encoder(2, 3),
-                    null, // new Ultrasonic(-1, -1),
+                    new Ultrasonic(1, 0), // new Ultrasonic(-1, -1),
                     new AHRS(SPI.Port.kMXP)
                     )
             }

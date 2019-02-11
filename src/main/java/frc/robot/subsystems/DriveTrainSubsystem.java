@@ -128,6 +128,14 @@ public class DriveTrainSubsystem extends Subsystem {
             return -1;
     }
 
+    public double returnUltrasonicVal (){  
+        return sonic.getRangeInches();
+    }
+
+    public void sonicSetAutomatic(){
+        sonic.setAutomaticMode(true); 
+    }
+
     public void putEncodersOnDash() {
         if (this.leftEncoder != null)
             SmartDashboard.putNumber("Left Encoder Value               ", getLeftEncoder());
