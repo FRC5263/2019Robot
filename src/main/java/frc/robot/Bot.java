@@ -8,38 +8,42 @@
 package frc.robot;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.Map;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * Generic constructor for all bot setups.
  */
 public class Bot {
-    private ArrayList<Subsystem> subsystems = new ArrayList<>(0);
+
+    public static String DRIVETRAIN = "drivetrain";
+    public static String PNEUMATICS = "pneumatics";
+    public static String ACTUATOR = "actuator";
+
+    private Map<String, Subsystem> subsystems = new HashMap<>();
 
     public Bot() {
 
     }
 
-    public Bot(Subsystem[] subsystems) {
-        for (Subsystem sub : subsystems) {
-            this.subsystems.add(sub);
-        }
+    public Bot(HashMap<String, Subsystem> subsystems) {
+        this.subsystems.putAll(subsystems);
     }
 
-    public void addSubsystem(Subsystem subsystem) {
-        this.subsystems.add(subsystem);
+    public void addSubsystem(String key, Subsystem subsystem) {
+        this.subsystems.put(key, subsystem);
     }
 
-    /**
-     * @return a certain subsystem that is already on the 
-     */
-    public Subsystem getSubsystem(Class type) throws Exception {
-        for(Subsystem sub : this.subsystems) {
-            if(sub.getClass() == type) {
-                return sub;
-            }
-        }
-        throw new Exception("subsystem does not exist.");
+    public Subsystem getSubsystem(String key) throws Exception {
+        Subsystem subsystem = this.subsystems.get(key);
+        if(subsystem != null) 
+            return subsystem;
+        else
+            throw new Exception("subsystem does not exist.");
+    }
+
+    public boolean hasSubsystem(String key) {
+        return this.subsystems.containsKey(key);
     }
 }
