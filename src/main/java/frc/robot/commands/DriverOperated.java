@@ -11,7 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import frc.robot.Bot;
 import frc.robot.subsystems.DriveTrainSubsystem;
-
+import frc.robot.subsystems.MotorSubsystem;
+import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.Robot;
 import frc.robot.OI.ButtonName;
 
@@ -19,6 +20,8 @@ public class DriverOperated extends Command {
 
   private Bot robot;
   private DriveTrainSubsystem drivetrain;
+  // private MotorSubsystem actuator;
+  private PneumaticsSubsystem pneumatics;
   private boolean finishEarly = false;
 	private double driveSpeedFactor = .65;
 	private boolean facingForward = true;
@@ -27,6 +30,16 @@ public class DriverOperated extends Command {
     this.robot = robot;
     try {
       this.drivetrain = (DriveTrainSubsystem) this.robot.getSubsystem(DriveTrainSubsystem.class);
+    } catch( Exception e) {
+      this.finishEarly = true;
+    }
+    // try {
+    //   this.actuator = (MotorSubsystem) this.robot.getSubsystem(MotorSubsystem.class);
+    // } catch( Exception e) {
+    //   this.finishEarly = true;
+    // }
+    try {
+      this.pneumatics = (PneumaticsSubsystem) this.robot.getSubsystem(PneumaticsSubsystem.class);
     } catch( Exception e) {
       this.finishEarly = true;
     }
@@ -46,6 +59,12 @@ public class DriverOperated extends Command {
     boolean ButtonB = Robot.m_oi.getButtonMain(ButtonName.B);
     boolean ButtonX = Robot.m_oi.getButtonMain(ButtonName.X);
     boolean ButtonY = Robot.m_oi.getButtonMain(ButtonName.Y);
+
+    boolean DriverBumperRight = Robot.m_oi.getButtonMain(ButtonName.RB);
+    boolean DriverBumperLeft = Robot.m_oi.getButtonMain(ButtonName.LB);
+
+    int DriverPOV = Robot.m_oi.getDriverPOV();
+
 
     // Operator Buttons
     boolean OperatorB = Robot.m_oi.getButton(ButtonName.B);
@@ -79,6 +98,26 @@ public class DriverOperated extends Command {
       this.drivetrain.arcadeDrive(rightStickY * driveSpeedFactor, rightStickX * driveSpeedFactor);
     else
       this.drivetrain.arcadeDrive(rightStickY * driveSpeedFactor * -1, rightStickX * driveSpeedFactor * -1);
+
+
+    //ACTUATOR DRIVER CODE
+    // if (ButtonA) {
+    //   actuator.powerMotor(-0.3);
+    // } else if(ButtonY) {
+    //   actuator.powerMotor(0.3);
+    // } else {
+    //   actuator.powerMotor(0);
+    // }
+
+    //test pneumatics code
+    if(DriverPOV == 0) {
+      pneumatics.setDirectionForward();
+    } else if(DriverPOV == 180) {
+      pneumatics.setDirectionReverse();
+    } else if(DriverPOV == 90 || DriverPOV == 270) {
+      pneumatics.setSolenoidOff();
+    }
+
 
   }
 
