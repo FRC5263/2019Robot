@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Bot;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.MotorSubsystem;
@@ -55,7 +54,7 @@ public class DriverOperated extends Command {
   @Override
   protected void execute() {
 
-    SmartDashboard.putNumber("Ultrasonic: ", drivetrain.getSonicDistance());
+    drivetrain.putUltrasonicOnDash();
     // Driver Button
     boolean ButtonA = Robot.m_oi.getButtonMain(ButtonName.A);
     boolean ButtonB = Robot.m_oi.getButtonMain(ButtonName.B);

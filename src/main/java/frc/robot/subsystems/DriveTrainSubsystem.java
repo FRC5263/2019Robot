@@ -139,13 +139,26 @@ public class DriveTrainSubsystem extends Subsystem {
     public void putEncodersOnDash() {
         if (this.leftEncoder != null)
             SmartDashboard.putNumber("Left Encoder Value               ", getLeftEncoder());
+        else
+            SmartDashboard.putString("Left Encoder", "disconnected");
         if (this.rightEncoder != null)
             SmartDashboard.putNumber("Right Encoder Value              ", getRightEncoder());
+        else
+            SmartDashboard.putString("Left Encoder", "disconnected");
     }
 
     public void putCompassOnDash() {
         if(navx != null)
             SmartDashboard.putNumber("Gyroscopic angle in degrees      ", getRotation());
+        else
+            SmartDashboard.putString("Compass", "disconnected");
+    }
+
+    public void putUltrasonicOnDash() {
+        if(sonic != null)
+            SmartDashboard.putNumber("Ultrasonic: ", getSonicDistance());
+        else 
+            SmartDashboard.putString("Ultrasonic:", "disconnected");
     }
 
 }
