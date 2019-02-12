@@ -9,6 +9,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Bot;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.MotorSubsystem;
+import frc.robot.subsystems.PneumaticsSubsystem;
 
 //import hardware
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -19,6 +21,8 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 
 import edu.wpi.first.wpilibj.Spark;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 
 /**
@@ -36,7 +40,8 @@ public class Bots {
                     new Encoder(0, 1),
                     null, // new Ultrasonic(-1, -1),
                     new AHRS(SPI.Port.kMXP)
-                    )
+                    ),
+                new PneumaticsSubsystem(new DoubleSolenoid(1, 0, 1))
             }
         );
     }
@@ -51,7 +56,8 @@ public class Bots {
                     new Encoder(2, 3),
                     null, // new Ultrasonic(-1, -1),
                     new AHRS(SPI.Port.kMXP)
-                    )
+                    ),
+                new MotorSubsystem(new WPI_VictorSPX(8))
             }
         );
     }
