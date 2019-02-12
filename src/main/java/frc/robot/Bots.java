@@ -8,6 +8,7 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Bot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.MotorSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
@@ -24,11 +25,35 @@ import edu.wpi.first.wpilibj.Spark;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  * Storage of Different Bot configurations.
  */
 public class Bots {
+
+    private static DigitalInput jumper;
+
+    /**
+     * Configures robot hardware based on DIO Jumper (9)
+     * No Jumper Connection = Competition Robot
+     * Jumper Connected = Test Bot One
+     * @return corresponding Bot of Rio Jumper
+     */
+    public static Bot getBotByHardware() {
+
+        //true = OPEN, false = CLOSED (connected)
+        jumper  = new DigitalInput(9);
+        if(jumper.get()) { //if OPEN
+            System.out.println("running on Competiton Robot Hardware");
+            SmartDashboard.putString("Hardware Configuration", "Competition Robot");
+            return createCompetitionBot();
+        } else {
+            System.out.println("running on Test Bot One Hardware");
+            SmartDashboard.putString("Hardware Configuration", "Test Bot One");
+            return createTestBotOne();
+        }
+    }
 
     public static Bot createCompetitionBot(){
         return new Bot(
@@ -55,7 +80,7 @@ public class Bots {
                     new Spark(1),
                     new Encoder(0, 1),
                     new Encoder(2, 3),
-                    new Ultrasonic(1, 0), // new Ultrasonic(-1, -1),
+                    null, //new Ultrasonic(1, 0),
                     new AHRS(SPI.Port.kMXP)
                     ),
                 new MotorSubsystem(new WPI_VictorSPX(8))

@@ -32,7 +32,10 @@ import frc.robot.commands.FollowPath;
 public class Robot extends TimedRobot {
 
   // Bot robot = Bots.createCompetitionBot();
-  Bot robot = Bots.createTestBotOne();
+  // Bot robot = Bots.createTestBotOne();
+
+  Bot robot = Bots.getBotByHardware();
+
   DriveTrainSubsystem drivetrain;
 
   Command drive5 = new DriveTo(robot, 5, 0.3, 10);
