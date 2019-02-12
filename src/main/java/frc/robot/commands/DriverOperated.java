@@ -8,7 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Bot;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.MotorSubsystem;
@@ -48,12 +48,14 @@ public class DriverOperated extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    drivetrain.sonicSetAutomatic();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
 
+    SmartDashboard.putNumber("Ultrasonic: ", drivetrain.getSonicDistance());
     // Driver Button
     boolean ButtonA = Robot.m_oi.getButtonMain(ButtonName.A);
     boolean ButtonB = Robot.m_oi.getButtonMain(ButtonName.B);
