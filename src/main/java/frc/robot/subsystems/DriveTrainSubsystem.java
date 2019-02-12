@@ -133,7 +133,8 @@ public class DriveTrainSubsystem extends Subsystem {
     }
 
     public void sonicSetAutomatic(){
-        sonic.setAutomaticMode(true); 
+        if(sonic != null)
+            sonic.setAutomaticMode(true); 
     }
 
     public void putEncodersOnDash() {
