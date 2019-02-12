@@ -65,7 +65,15 @@ public class OI {
 	
 	public boolean getButtonMain(ButtonName buttonName) {
 		return driverGamepad.getRawButton(buttonName.value);
-  }
+	  }
+	  
+	public int getDriverPOV() {
+		return driverGamepad.getPOV();
+	}
+
+	public int getOperatorPOV() {
+		return operatorGamepad.getPOV();
+	}
   
 	public OI() {
 	}
