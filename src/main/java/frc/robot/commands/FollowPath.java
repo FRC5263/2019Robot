@@ -46,7 +46,7 @@ public class FollowPath extends Command {
 
   private static final int k_gyro_port = 0;
 
-  private static final String k_path_name = "test1";
+  private static final String k_path_name = "testfoo";
 
   public FollowPath(Bot robot) {
     this.robot = robot;
@@ -63,6 +63,7 @@ public class FollowPath extends Command {
 
     drivetrain.resetCompass();
     drivetrain.resetEncoders();
+
 
     //REVIEW: MAKE SURE TO FIX THIS CODE WITH PATHFINDER 3.1 !!! SWAP LEFT AND RIGHT
     Trajectory left_trajectory = PathfinderFRC.getTrajectory(k_path_name + ".right");
