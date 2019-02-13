@@ -27,7 +27,7 @@ public class DriveTo extends Command {
     public DriveTo(Bot robot, double driveDistanceFeet, double power, double angle, double seconds) {
         this.robot = robot;
         try {
-            this.drivetrain = (DriveTrainSubsystem) this.robot.getSubsystem(DriveTrainSubsystem.class);
+            this.drivetrain = (DriveTrainSubsystem) this.robot.getSubsystem(Bot.DRIVETRAIN);
         } catch (Exception e) {
             this.finishEarly = true;
         }
@@ -43,7 +43,7 @@ public class DriveTo extends Command {
     public DriveTo(Bot robot, double driveDistanceFeet, double power, double seconds) {
         this.robot = robot;
         try {
-            this.drivetrain = (DriveTrainSubsystem) this.robot.getSubsystem(DriveTrainSubsystem.class);
+            this.drivetrain = (DriveTrainSubsystem) this.robot.getSubsystem(Bot.DRIVETRAIN);
         } catch (Exception e) {
             this.finishEarly = true;
         }

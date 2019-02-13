@@ -13,6 +13,9 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.MotorSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 
+import java.util.HashMap;
+import java.util.Map;
+
 //import hardware
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -57,34 +60,34 @@ public class Bots {
 
     public static Bot createCompetitionBot(){
         return new Bot(
-            new Subsystem[]{
-                new DriveTrainSubsystem(
+            new HashMap<String, Subsystem>() {{
+                put(Bot.DRIVETRAIN, new DriveTrainSubsystem(
                     new SpeedControllerGroup(new WPI_TalonSRX(2), new WPI_TalonSRX(3)),
                     new SpeedControllerGroup(new WPI_TalonSRX(4), new WPI_TalonSRX(5)),
                     new Encoder(2, 3),
                     new Encoder(0, 1),
                     null, 
-                     // new Ultrasonic(-1, -1),
+                    // new Ultrasonic(-1, -1),
                     new AHRS(SPI.Port.kMXP)
-                    ),
-                new PneumaticsSubsystem(new DoubleSolenoid(1, 0, 1))
-            }
+                    ));
+                put(Bot.PNEUMATICS, new PneumaticsSubsystem(new DoubleSolenoid(1, 0, 1)));
+            }}
         );
     }
 
     public static Bot createTestBotOne() {
         return new Bot(
-            new Subsystem[]{
-                new DriveTrainSubsystem(
-                    new Spark(0),
-                    new Spark(1),
-                    new Encoder(0, 1),
-                    new Encoder(2, 3),
-                    null, //new Ultrasonic(1, 0),
-                    new AHRS(SPI.Port.kMXP)
-                    ),
-                new MotorSubsystem(new WPI_VictorSPX(8))
-            }
+            new HashMap<String, Subsystem>() {{
+                put(Bot.DRIVETRAIN, new DriveTrainSubsystem(
+                            new Spark(0),
+                            new Spark(1),
+                            new Encoder(0, 1),
+                            new Encoder(2, 3),
+                            null, //new Ultrasonic(1, 0),
+                            new AHRS(SPI.Port.kMXP)
+                            ));
+                put(Bot.ACTUATOR, new MotorSubsystem(new WPI_VictorSPX(8)));
+            }}
         );
     }
     

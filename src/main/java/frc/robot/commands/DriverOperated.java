@@ -28,7 +28,8 @@ public class DriverOperated extends Command {
   public DriverOperated(Bot robot) {
     this.robot = robot;
     try {
-      this.drivetrain = (DriveTrainSubsystem) this.robot.getSubsystem(DriveTrainSubsystem.class);
+      this.drivetrain = (DriveTrainSubsystem) this.robot.getSubsystem(Bot.DRIVETRAIN);
+      System.out.println("GOT DRIVETRAIN!");
     } catch( Exception e) {
       this.finishEarly = true;
     }
@@ -38,7 +39,7 @@ public class DriverOperated extends Command {
     //   this.finishEarly = true;
     // }
     try {
-      this.pneumatics = (PneumaticsSubsystem) this.robot.getSubsystem(PneumaticsSubsystem.class);
+      this.pneumatics = (PneumaticsSubsystem) this.robot.getSubsystem(Bot.PNEUMATICS);
     } catch( Exception e) {
       this.finishEarly = true;
     }
@@ -131,6 +132,7 @@ public class DriverOperated extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("TELEOP CAME TO A STOP! most likely a problem with getting required subsystems");
   }
 
   // Called when another command which requires one or more of the same

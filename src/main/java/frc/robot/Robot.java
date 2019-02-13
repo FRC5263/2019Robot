@@ -60,7 +60,7 @@ public class Robot extends TimedRobot {
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
     try {
-      drivetrain = (DriveTrainSubsystem) robot.getSubsystem(DriveTrainSubsystem.class);
+      drivetrain = (DriveTrainSubsystem) robot.getSubsystem(Bot.DRIVETRAIN);
     } catch (Exception e) {
       drivetrain = null;
     } 
