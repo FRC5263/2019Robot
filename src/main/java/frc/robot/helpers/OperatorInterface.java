@@ -67,9 +67,9 @@ public class OperatorInterface{
         }
     }
 
-    public static void setLeftStickXFunction(AxisFunction function) {
+    public static void setAxisFunction(AxisName axisName, AxisFunction function) {
         try{
-            function.call(Robot.m_oi.getDriverAxis(AxisName.LEFTSTICKX));
+            function.call(Robot.m_oi.getDriverAxis(axisName));
         } catch (Exception e) {
             System.out.println("Could not run " + function.toString());
         }
