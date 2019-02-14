@@ -1,5 +1,5 @@
 package frc.robot.helpers;
 
 public interface POVFunction {
-    void call(int POV);
+    void call(int pov);
 }

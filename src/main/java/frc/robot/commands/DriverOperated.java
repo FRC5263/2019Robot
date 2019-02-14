@@ -13,7 +13,12 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.MotorSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.Robot;
+import frc.robot.OI.AxisName;
 import frc.robot.OI.ButtonName;
+import frc.robot.helpers.OperatorInterface;
+import frc.robot.helpers.POVFunction;
+import frc.robot.helpers.ButtonFunction;
+import frc.robot.helpers.AxisFunction;
 
 public class DriverOperated extends Command {
 
@@ -55,24 +60,29 @@ public class DriverOperated extends Command {
   @Override
   protected void execute() {
 
+
+
+
+
+
     drivetrain.putUltrasonicOnDash();
     // Driver Button
-    boolean ButtonA = Robot.m_oi.getButtonMain(ButtonName.A);
-    boolean ButtonB = Robot.m_oi.getButtonMain(ButtonName.B);
-    boolean ButtonX = Robot.m_oi.getButtonMain(ButtonName.X);
-    boolean ButtonY = Robot.m_oi.getButtonMain(ButtonName.Y);
+    // boolean ButtonA = Robot.m_oi.getDriverButton(ButtonName.A);
+    // boolean ButtonB = Robot.m_oi.getDriverButton(ButtonName.B);
+    // boolean ButtonX = Robot.m_oi.getDriverButton(ButtonName.X);
+    // boolean ButtonY = Robot.m_oi.getDriverButton(ButtonName.Y);
 
-    boolean DriverBumperRight = Robot.m_oi.getButtonMain(ButtonName.RB);
-    boolean DriverBumperLeft = Robot.m_oi.getButtonMain(ButtonName.LB);
+    // boolean DriverBumperRight = Robot.m_oi.getDriverButton(ButtonName.RB);
+    // boolean DriverBumperLeft = Robot.m_oi.getDriverButton(ButtonName.LB);
 
-    int DriverPOV = Robot.m_oi.getDriverPOV();
+    // int DriverPOV = Robot.m_oi.getDriverPOV();
 
 
     // Operator Buttons
-    boolean OperatorB = Robot.m_oi.getButton(ButtonName.B);
-    boolean OperatorX = Robot.m_oi.getButton(ButtonName.X);
-    boolean OperatorRB = Robot.m_oi.getButton(ButtonName.RB);
-    boolean OperatorLB = Robot.m_oi.getButton(ButtonName.LB);
+    // boolean OperatorB = Robot.m_oi.getOperatorButton(ButtonName.B);
+    // boolean OperatorX = Robot.m_oi.getOperatorButton(ButtonName.X);
+    // boolean OperatorRB = Robot.m_oi.getOperatorButton(ButtonName.RB);
+    // boolean OperatorLB = Robot.m_oi.getOperatorButton(ButtonName.LB);
 
     // if(ButtonY){
     // facingForward = true;
@@ -85,22 +95,40 @@ public class DriverOperated extends Command {
      * Right Stick Y
      */
 
-    double rightStickY = Robot.m_oi.driverGamepad.getRawAxis(1) * -1;
-    double rightStickX = Robot.m_oi.driverGamepad.getRawAxis(4);
+    // double rightStickY = Robot.m_oi.driverGamepad.getRawAxis(1) * -1;
+    // double rightStickX = Robot.m_oi.driverGamepad.getRawAxis(4);
 
-    if (ButtonX) {
-      System.out.println("Full Speed");
-      driveSpeedFactor = 1;
-    } else if (ButtonB) {
-      System.out.println("65%");
-      driveSpeedFactor = .65;
-    }
+    // if (ButtonX) {
+    //   System.out.println("Full Speed");
+    //   driveSpeedFactor = 1;
+    // } else if (ButtonB) {
+    //   System.out.println("65%");
+    //   driveSpeedFactor = .65;
+    // }
 
-    if (facingForward)
-      this.drivetrain.arcadeDrive(rightStickY * driveSpeedFactor, rightStickX * driveSpeedFactor);
-    else
-      this.drivetrain.arcadeDrive(rightStickY * driveSpeedFactor * -1, rightStickX * driveSpeedFactor * -1);
+    // if (facingForward)
+    //   this.drivetrain.arcadeDrive(rightStickY * driveSpeedFactor, rightStickX * driveSpeedFactor);
+    // else
+    //   this.drivetrain.arcadeDrive(rightStickY * driveSpeedFactor * -1, rightStickX * driveSpeedFactor * -1);
 
+    OperatorInterface.setAxisFunction(AxisName.RIGHTSTICKY, new AxisFunction(){
+      @Override
+      public void call(Double rightStickY) {
+        OperatorInterface.setAxisFunction(AxisName.RIGHTSTICKX, new AxisFunction(){
+          @Override
+          public void call(Double rightStickX) {
+            arcadeDrive(rightStickX, rightStickY);
+          }
+        });
+      }
+    });
+
+    OperatorInterface.setPOVFunction(true, new POVFunction(){
+      @Override
+      public void call(int pov) {
+        drivePneumatics(pov);
+      }
+    });
 
     //ACTUATOR DRIVER CODE
     // if (ButtonA) {
@@ -111,16 +139,23 @@ public class DriverOperated extends Command {
     //   actuator.powerMotor(0);
     // }
 
-    //test pneumatics code
-    if(DriverPOV == 0) {
+
+
+
+  }
+
+  private void arcadeDrive(double rightStickX, double rightStickY) {
+    this.drivetrain.arcadeDrive(rightStickY * driveSpeedFactor, rightStickX * driveSpeedFactor);
+  }
+
+  private void drivePneumatics(int pov) {
+    if(pov == 0) {
       pneumatics.setDirectionForward();
-    } else if(DriverPOV == 180) {
+    } else if(pov == 180) {
       pneumatics.setDirectionReverse();
-    } else if(DriverPOV == 90 || DriverPOV == 270) {
+    } else if(pov == 90 || pov == 270) {
       pneumatics.setSolenoidOff();
     }
-
-
   }
 
   // Make this return true when this Command no longer needs to run execute()
