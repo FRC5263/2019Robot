@@ -66,37 +66,12 @@ public class DriverOperated extends Command {
 
 
     drivetrain.putUltrasonicOnDash();
-    // Driver Button
-    // boolean ButtonA = Robot.m_oi.getDriverButton(ButtonName.A);
-    // boolean ButtonB = Robot.m_oi.getDriverButton(ButtonName.B);
-    // boolean ButtonX = Robot.m_oi.getDriverButton(ButtonName.X);
-    // boolean ButtonY = Robot.m_oi.getDriverButton(ButtonName.Y);
-
-    // boolean DriverBumperRight = Robot.m_oi.getDriverButton(ButtonName.RB);
-    // boolean DriverBumperLeft = Robot.m_oi.getDriverButton(ButtonName.LB);
-
-    // int DriverPOV = Robot.m_oi.getDriverPOV();
-
-
-    // Operator Buttons
-    // boolean OperatorB = Robot.m_oi.getOperatorButton(ButtonName.B);
-    // boolean OperatorX = Robot.m_oi.getOperatorButton(ButtonName.X);
-    // boolean OperatorRB = Robot.m_oi.getOperatorButton(ButtonName.RB);
-    // boolean OperatorLB = Robot.m_oi.getOperatorButton(ButtonName.LB);
 
     // if(ButtonY){
     // facingForward = true;
     // }else if (ButtonA){
     // facingForward = false;
     // }
-
-    /*
-     * Axis 0 = Left Stick X Axis 1 = Left Stick Y Axis 4 - Right Stick X Axis 5 -
-     * Right Stick Y
-     */
-
-    // double rightStickY = Robot.m_oi.driverGamepad.getRawAxis(1) * -1;
-    // double rightStickX = Robot.m_oi.driverGamepad.getRawAxis(4);
 
     // if (ButtonX) {
     //   System.out.println("Full Speed");
@@ -138,9 +113,6 @@ public class DriverOperated extends Command {
     // } else {
     //   actuator.powerMotor(0);
     // }
-
-
-
 
   }
 
