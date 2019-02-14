@@ -35,7 +35,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
  */
 public class Bots {
 
-    private static DigitalInput jumper;
+    // private static DigitalInput jumper;
 
     /**
      * Configures robot hardware based on DIO Jumper (9)
@@ -46,16 +46,27 @@ public class Bots {
     public static Bot getBotByHardware() {
 
         //true = OPEN, false = CLOSED (connected)
-        jumper  = new DigitalInput(9);
-        if(jumper.get()) { //if OPEN
-            System.out.println("running on Competiton Robot Hardware");
-            SmartDashboard.putString("Hardware Configuration", "Competition Robot");
-            return createCompetitionBot();
-        } else {
+        DigitalInput dio9  = new DigitalInput(9);
+        Boolean dio9Connected = !dio9.get();
+        dio9.close();
+        DigitalInput dio8 = new DigitalInput(8);
+        Boolean dio8Connected = !dio8.get();
+        dio8.close();
+
+        if(dio9Connected) {
             System.out.println("running on Test Bot One Hardware");
             SmartDashboard.putString("Hardware Configuration", "Test Bot One");
             return createTestBotOne();
+        } else if(dio8Connected) {
+            System.out.println("running on Test Bench Hardware");
+            SmartDashboard.putString("Hardware Configuration", "Test Bench Robot");
+            return createTestBench();
+        } else {
+            System.out.println("running on Competiton Robot Hardware");
+            SmartDashboard.putString("Hardware Configuration", "Competition Robot");
+            return createCompetitionBot();
         }
+
     }
 
     public static Bot createCompetitionBot(){
@@ -89,6 +100,12 @@ public class Bots {
                 put(Bot.ACTUATOR, new MotorSubsystem(new WPI_VictorSPX(8)));
             }}
         );
+    }
+
+    public static Bot createTestBench() {
+        return new Bot(new HashMap<String, Subsystem>() {{
+            put(Bot.DRIVETRAIN, new DriveTrainSubsystem(null, null, null, null, null, null));
+        }});
     }
     
 
