@@ -30,10 +30,7 @@ import frc.robot.commands.FollowPath;
  * project.
  */
 public class Robot extends TimedRobot {
-
-  // Bot robot = Bots.createCompetitionBot();
-  // Bot robot = Bots.createTestBotOne();
-
+  
   Bot robot = Bots.getBotByHardware();
 
   DriveTrainSubsystem drivetrain;
