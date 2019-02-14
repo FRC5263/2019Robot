@@ -51,7 +51,7 @@ public class OI {
 	Button rightBumper = new JoystickButton(operatorGamepad, 6);
 	
 	public enum ButtonName{
-		A(1), B(2), X(3), Y(4), LB(5), RB(6);
+		A(1), B(2), X(3), Y(4), LB(5), RB(6), BACK(7), START(8), LSTICK(9), RSTICK(10);
 		
 		public final int value;
 		
@@ -59,13 +59,33 @@ public class OI {
 			this.value = value;
 		}
 	}
-	public boolean getButton(ButtonName buttonName) {
+
+	  //  * Axis 0 = Left Stick X Axis 1 = Left Stick Y Axis 4 - Right Stick X Axis 5 -
+    //  * Right Stick Y
+	public enum AxisName{
+		LEFTSTICKX(0), LEFTSTICKY(1), LEFTTRIGGER(2), RIGHTTRIGGER(3), RIGHTSTICKX(4), RIGHTSTICKY(5);
+
+		public final int value;
+		private AxisName(int value) {
+			this.value = value;
+		}
+	}
+
+	public boolean getOperatorButton(ButtonName buttonName) {
 		return operatorGamepad.getRawButton(buttonName.value);
 	}
 	
-	public boolean getButtonMain(ButtonName buttonName) {
+	public boolean getDriverButton(ButtonName buttonName) {
 		return driverGamepad.getRawButton(buttonName.value);
 	  }
+
+	public double getDriverAxis(AxisName axisName) {
+		return driverGamepad.getRawAxis(axisName.value);
+	}
+
+	public double getOperatorAxis(AxisName axisName) {
+		return operatorGamepad.getRawAxis(axisName.value);
+	}
 	  
 	public int getDriverPOV() {
 		return driverGamepad.getPOV();
