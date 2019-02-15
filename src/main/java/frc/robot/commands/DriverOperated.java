@@ -43,11 +43,11 @@ public class DriverOperated extends Command {
     // } catch( Exception e) {
     //   this.finishEarly = true;
     // }
-    try {
-      this.pneumatics = (PneumaticsSubsystem) this.robot.getSubsystem(Bot.PNEUMATICS);
-    } catch( Exception e) {
-      this.finishEarly = true;
-    }
+    // try {
+    //   this.pneumatics = (PneumaticsSubsystem) this.robot.getSubsystem(Bot.PNEUMATICS);
+    // } catch( Exception e) {
+    //   this.finishEarly = true;
+    // }
   }
 
   // Called just before this Command runs the first time
@@ -74,13 +74,13 @@ public class DriverOperated extends Command {
     });
 
     //arcade drive
-    OperatorInterface.setAxisFunction(AxisName.RIGHTSTICKY, new AxisFunction(){
+    OperatorInterface.setAxisFunction(AxisName.LEFTSTICKY, new AxisFunction(){
       @Override
-      public void call(Double rightStickY) {
+      public void call(Double leftStickY) {
         OperatorInterface.setAxisFunction(AxisName.RIGHTSTICKX, new AxisFunction(){
           @Override
           public void call(Double rightStickX) {
-            arcadeDrive(rightStickX, rightStickY);
+            arcadeDrive(rightStickX, leftStickY * -1);
           }
         });
       }
@@ -118,13 +118,13 @@ public class DriverOperated extends Command {
   }
 
   private void drivePneumatics(int pov) {
-    if(pov == 0) {
-      pneumatics.setDirectionForward();
-    } else if(pov == 180) {
-      pneumatics.setDirectionReverse();
-    } else if(pov == 90 || pov == 270) {
-      pneumatics.setSolenoidOff();
-    }
+    // if(pov == 0) {
+    //   pneumatics.setDirectionForward();
+    // } else if(pov == 180) {
+    //   pneumatics.setDirectionReverse();
+    // } else if(pov == 90 || pov == 270) {
+    //   pneumatics.setSolenoidOff();
+    // }
   }
 
   // Make this return true when this Command no longer needs to run execute()
