@@ -60,32 +60,20 @@ public class DriverOperated extends Command {
   @Override
   protected void execute() {
 
+    //boosts robot speed when HOLDING right bumper
+    OperatorInterface.setButtonFunction(ButtonName.RB, true, new ButtonFunction(){
+      @Override
+      public void call() {
+        boostSpeed();
+      }
+    }, new ButtonFunction(){
+      @Override
+      public void call() {
+        reduceSpeed();
+      }
+    });
 
-
-
-
-
-    drivetrain.putUltrasonicOnDash();
-
-    // if(ButtonY){
-    // facingForward = true;
-    // }else if (ButtonA){
-    // facingForward = false;
-    // }
-
-    // if (ButtonX) {
-    //   System.out.println("Full Speed");
-    //   driveSpeedFactor = 1;
-    // } else if (ButtonB) {
-    //   System.out.println("65%");
-    //   driveSpeedFactor = .65;
-    // }
-
-    // if (facingForward)
-    //   this.drivetrain.arcadeDrive(rightStickY * driveSpeedFactor, rightStickX * driveSpeedFactor);
-    // else
-    //   this.drivetrain.arcadeDrive(rightStickY * driveSpeedFactor * -1, rightStickX * driveSpeedFactor * -1);
-
+    //arcade drive
     OperatorInterface.setAxisFunction(AxisName.RIGHTSTICKY, new AxisFunction(){
       @Override
       public void call(Double rightStickY) {
@@ -98,7 +86,8 @@ public class DriverOperated extends Command {
       }
     });
 
-    OperatorInterface.setPOVFunction(true, new POVFunction(){
+    //pneumatic drive
+    OperatorInterface.setPOVFunction(false, new POVFunction(){
       @Override
       public void call(int pov) {
         drivePneumatics(pov);
@@ -114,6 +103,14 @@ public class DriverOperated extends Command {
     //   actuator.powerMotor(0);
     // }
 
+  }
+
+  private void boostSpeed() {
+    this.driveSpeedFactor = 1.0;
+  }
+
+  private void reduceSpeed() {
+    this.driveSpeedFactor = .65;
   }
 
   private void arcadeDrive(double rightStickX, double rightStickY) {

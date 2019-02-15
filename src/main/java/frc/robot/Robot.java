@@ -75,6 +75,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     drivetrain.putEncodersOnDash();
     drivetrain.putCompassOnDash();
+    drivetrain.putUltrasonicOnDash();
   }
 
   /**
