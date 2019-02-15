@@ -46,7 +46,7 @@ public class FollowPath extends Command {
 
   private static final int k_gyro_port = 0;
 
-  private static final String k_path_name = "testfoo";
+  private static final String k_path_name = "TestDylan";
 
   public FollowPath(Bot robot) {
     this.robot = robot;
