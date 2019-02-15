@@ -25,6 +25,7 @@ public class DriverOperated extends Command {
   private Bot robot;
   private DriveTrainSubsystem drivetrain;
   // private MotorSubsystem actuator;
+  private MotorSubsystem bucket;
   private PneumaticsSubsystem pneumatics;
   private boolean finishEarly = false;
 	private double driveSpeedFactor = .65;
@@ -38,16 +39,17 @@ public class DriverOperated extends Command {
     } catch( Exception e) {
       this.finishEarly = true;
     }
-    // try {
-    //   this.actuator = (MotorSubsystem) this.robot.getSubsystem(MotorSubsystem.class);
-    // } catch( Exception e) {
-    //   this.finishEarly = true;
-    // }
-    // try {
-    //   this.pneumatics = (PneumaticsSubsystem) this.robot.getSubsystem(Bot.PNEUMATICS);
-    // } catch( Exception e) {
-    //   this.finishEarly = true;
-    // }
+    try {
+      this.pneumatics = (PneumaticsSubsystem) this.robot.getSubsystem(Bot.PNEUMATICS);
+    } catch( Exception e) {
+      this.finishEarly = true;
+    }
+
+    try {
+      this.bucket = (MotorSubsystem) this.robot.getSubsystem(Bot.BUCKET);
+    }catch(Exception e){
+      this.finishEarly = true;
+    }
   }
 
   // Called just before this Command runs the first time
@@ -94,6 +96,25 @@ public class DriverOperated extends Command {
       }
     });
 
+
+    OperatorInterface.setAxisFunction(AxisName.RIGHTTRIGGER,false, new AxisFunction(){
+      @Override
+      public void call(Double rightTrigger){
+        OperatorInterface.setAxisFunction(AxisName.LEFTTRIGGER ,false, new AxisFunction(){
+          @Override
+          public void call(Double leftTrigger){
+            if(rightTrigger > 0 && leftTrigger > 0){
+              
+            }else if(rightTrigger > 0){
+              bucketRun(rightTrigger);
+            }else if(leftTrigger > 0){
+              bucketRun(-leftTrigger);
+            }
+          }
+        });
+      }
+    });
+
     //ACTUATOR DRIVER CODE
     // if (ButtonA) {
     //   actuator.powerMotor(-0.3);
@@ -115,6 +136,10 @@ public class DriverOperated extends Command {
 
   private void arcadeDrive(double rightStickX, double rightStickY) {
     this.drivetrain.arcadeDrive(rightStickY * driveSpeedFactor, rightStickX * driveSpeedFactor);
+  }
+
+  private void bucketRun(Double power){
+    this.bucket.powerMotor(power);
   }
 
   private void drivePneumatics(int pov) {

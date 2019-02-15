@@ -20,7 +20,7 @@ public class Bot {
     public static String DRIVETRAIN = "drivetrain";
     public static String PNEUMATICS = "pneumatics";
     public static String ACTUATOR = "actuator";
-
+    public static String BUCKET = "bucket";
     private Map<String, Subsystem> subsystems = new HashMap<>();
 
     public Bot() {

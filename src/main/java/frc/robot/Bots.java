@@ -82,6 +82,7 @@ public class Bots {
                     new AHRS(SPI.Port.kMXP)
                     ));
                 put(Bot.PNEUMATICS, new PneumaticsSubsystem(new DoubleSolenoid(1, 0, 1)));
+                put(Bot.BUCKET, new MotorSubsystem(new WPI_VictorSPX(0)));
             }}
         );
     }
