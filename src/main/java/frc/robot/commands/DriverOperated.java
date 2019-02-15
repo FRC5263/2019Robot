@@ -74,10 +74,10 @@ public class DriverOperated extends Command {
     });
 
     //arcade drive
-    OperatorInterface.setAxisFunction(AxisName.LEFTSTICKY, new AxisFunction(){
+    OperatorInterface.setAxisFunction(AxisName.LEFTSTICKY, true, new AxisFunction(){
       @Override
       public void call(Double leftStickY) {
-        OperatorInterface.setAxisFunction(AxisName.RIGHTSTICKX, new AxisFunction(){
+        OperatorInterface.setAxisFunction(AxisName.RIGHTSTICKX, true, new AxisFunction(){
           @Override
           public void call(Double rightStickX) {
             arcadeDrive(rightStickX, leftStickY * -1);

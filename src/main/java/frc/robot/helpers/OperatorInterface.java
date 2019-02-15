@@ -69,11 +69,19 @@ public class OperatorInterface {
         }
     }
 
-    public static void setAxisFunction(AxisName axisName, AxisFunction function) {
-        try {
-            function.call(Robot.m_oi.getDriverAxis(axisName));
-        } catch (Exception e) {
-            System.out.println("Could not run " + function.toString());
+    public static void setAxisFunction(AxisName axisName, boolean driverController, AxisFunction function) {
+        if(driverController){
+            try {
+                function.call(Robot.m_oi.getDriverAxis(axisName));
+            } catch (Exception e) {
+                System.out.println("Could not run " + function.toString());
+            }
+        } else {
+            try {
+                function.call(Robot.m_oi.getOperatorAxis(axisName));
+            } catch (Exception e) {
+                System.out.println("Could not run " + function.toString());
+            }
         }
     }
 
