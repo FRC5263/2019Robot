@@ -26,6 +26,7 @@ public class DriverOperated extends Command {
   private DriveTrainSubsystem drivetrain;
   private MotorSubsystem actuator;
   private MotorSubsystem bucket;
+  private MotorSubsystem suck;
   private PneumaticsSubsystem pneumatics;
   private boolean finishEarly = false;
 	private double driveSpeedFactor = .65;
@@ -39,11 +40,11 @@ public class DriverOperated extends Command {
     } catch( Exception e) {
       this.finishEarly = true;
     }
-    // try {
-    //   this.pneumatics = (PneumaticsSubsystem) this.robot.getSubsystem(Bot.PNEUMATICS);
-    // } catch( Exception e) {
-    //   this.finishEarly = true;
-    // }
+    try {
+      this.pneumatics = (PneumaticsSubsystem) this.robot.getSubsystem(Bot.PNEUMATICS);
+    } catch( Exception e) {
+      this.finishEarly = true;
+    }
 
     // try {
     //   this.bucket = (MotorSubsystem) this.robot.getSubsystem(Bot.BUCKET);
@@ -52,6 +53,16 @@ public class DriverOperated extends Command {
     // }
     try {
       this.actuator = (MotorSubsystem) this.robot.getSubsystem(Bot.ACTUATOR);
+    }catch(Exception e){
+      this.finishEarly = true;
+    }
+    try {
+      this.bucket = (MotorSubsystem) this.robot.getSubsystem(Bot.BUCKET);
+    }catch(Exception e){
+      this.finishEarly = true;
+    }
+    try {
+      this.suck = (MotorSubsystem) this.robot.getSubsystem(Bot.SUCK);
     }catch(Exception e){
       this.finishEarly = true;
     }
@@ -93,8 +104,21 @@ public class DriverOperated extends Command {
     //   }
     // });
 
+        // //arcade drive
+    OperatorInterface.setAxisFunction(AxisName.LEFTSTICKY, false, new AxisFunction(){
+      @Override
+      public void call(Double leftStickY) {
+        OperatorInterface.setAxisFunction(AxisName.RIGHTSTICKX, false, new AxisFunction(){
+          @Override
+          public void call(Double rightStickX) {
+            arcadeDrive(rightStickX, leftStickY * -1);
+          }
+        });
+      }
+    });
+
     //pneumatic drive
-    OperatorInterface.setPOVFunction(false, new POVFunction(){
+    OperatorInterface.setPOVFunction(true, new POVFunction(){
       @Override
       public void call(int pov) {
         drivePneumatics(pov);
@@ -132,7 +156,27 @@ public class DriverOperated extends Command {
     OperatorInterface.setAxisFunction(AxisName.LEFTSTICKY, true, new AxisFunction(){
       @Override
       public void call(Double axisValue) {
-        driveActuator(axisValue);
+        driveActuator(-axisValue);
+      }
+    });
+
+    OperatorInterface.setAxisFunction(AxisName.RIGHTSTICKY, true, new AxisFunction(){
+      @Override
+      public void call(Double axisValue) {
+        powerBucket(axisValue);
+      }
+    });
+
+    OperatorInterface.setAxisFunction(AxisName.RIGHTTRIGGER, true, new AxisFunction(){
+      @Override
+      public void call(Double rightTrigger) {
+        OperatorInterface.setAxisFunction(AxisName.LEFTTRIGGER, true, new AxisFunction(){
+          @Override
+          public void call(Double leftTrigger) {
+              driveSuck(rightTrigger - leftTrigger);
+              // System.out.println(rightTrigger - leftTrigger);
+          }
+        });
       }
     });
 
@@ -150,23 +194,31 @@ public class DriverOperated extends Command {
     this.drivetrain.arcadeDrive(rightStickY * driveSpeedFactor, rightStickX * driveSpeedFactor);
   }
 
-  private void bucketRun(Double power){
+  private void powerBucket(Double power){
     this.bucket.powerMotor(power);
   }
 
   private void drivePneumatics(int pov) {
-    // if(pov == 0) {
-    //   pneumatics.setDirectionForward();
-    // } else if(pov == 180) {
-    //   pneumatics.setDirectionReverse();
-    // } else if(pov == 90 || pov == 270) {
-    //   pneumatics.setSolenoidOff();
-    // }
+    if(pov == 0) {
+      pneumatics.setDirectionForward();
+    } else if(pov == 180) {
+      pneumatics.setDirectionReverse();
+    } else if(pov == 90 || pov == 270) {
+      pneumatics.setSolenoidOff();
+    }
   }
 
   private void driveActuator(Double power) {
-    this.actuator.powerMotor(power);
-    System.out.println("POWER: " + power);
+    if(power > 0.0) {
+      this.actuator.powerMotor(power * 0.8);
+    } else {
+      this.actuator.powerMotor(power * 0.3);
+    }
+    // System.out.println("POWER: " + power);
+  }
+
+  private void driveSuck(double power) {
+    this.suck.powerMotor(power);
   }
 
   // Make this return true when this Command no longer needs to run execute()

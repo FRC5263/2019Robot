@@ -80,9 +80,9 @@ public class Bots {
                                 // new Ultrasonic(-1, -1),
                                 new AHRS(SPI.Port.kMXP)));
                 put(Bot.ACTUATOR, new MotorSubsystem(new WPI_TalonSRX(6)));
-
-                // put(Bot.PNEUMATICS, new PneumaticsSubsystem(new DoubleSolenoid(1, 0, 1)));
-                // put(Bot.BUCKET, new MotorSubsystem(new WPI_VictorSPX(6)));
+                put(Bot.BUCKET, new MotorSubsystem(new WPI_TalonSRX(7)));
+                put(Bot.SUCK, new MotorSubsystem(new WPI_VictorSPX(8)));
+                put(Bot.PNEUMATICS, new PneumaticsSubsystem(new DoubleSolenoid(1, 0, 1)));
             }
         });
     }
