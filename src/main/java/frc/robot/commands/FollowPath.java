@@ -10,6 +10,7 @@ package frc.robot.commands;
 import frc.robot.Bot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 import jaci.pathfinder.Pathfinder;
@@ -33,18 +34,8 @@ public class FollowPath extends Command {
 
 
   private static final int k_ticks_per_rev = 360;
-  private static final double k_wheel_diameter = 8.0 / 12.0;
-  private static final double k_max_velocity = 10;
-
-  private static final int k_left_channel = 0;
-  private static final int k_right_channel = 1;
-
-  private static final int k_left_encoder_port_a = 0;
-  private static final int k_left_encoder_port_b = 1;
-  private static final int k_right_encoder_port_a = 2;
-  private static final int k_right_encoder_port_b = 3;
-
-  private static final int k_gyro_port = 0;
+  private static final double k_wheel_diameter = 6.0;
+  private static final double k_max_velocity = 100;
 
   private static final String k_path_name = "TestDylan";
 
@@ -74,11 +65,11 @@ public class FollowPath extends Command {
 
     m_left_follower.configureEncoder(drivetrain.getLeftEncoder(), k_ticks_per_rev, k_wheel_diameter);
     // You must tune the PID values on the following line!
-    m_left_follower.configurePIDVA(1.0, 0.0, 0.0, 1 / k_max_velocity, 0);
+    m_left_follower.configurePIDVA(0.5, 0.0, 0.0, 1 / k_max_velocity, 0);
 
     m_right_follower.configureEncoder(drivetrain.getRightEncoder(), k_ticks_per_rev, k_wheel_diameter);
     // You must tune the PID values on the following line!
-    m_right_follower.configurePIDVA(1.0, 0.0, 0.0, 1 / k_max_velocity, 0);
+    m_right_follower.configurePIDVA(0.5, 0.0, 0.0, 1 / k_max_velocity, 0);
     
     m_follower_notifier = new Notifier(this::followPath);
     m_follower_notifier.startPeriodic(left_trajectory.get(0).dt);
@@ -91,11 +82,20 @@ public class FollowPath extends Command {
       isFinished = true;
     } else {
       double left_speed = m_left_follower.calculate(drivetrain.getLeftEncoder());
+      SmartDashboard.putNumber("left speed", left_speed);
       double right_speed = m_right_follower.calculate(drivetrain.getRightEncoder());
+      SmartDashboard.putNumber("right speed", right_speed);
       double heading = drivetrain.getRotation();
+      SmartDashboard.putNumber("heading", heading);
       double desired_heading = Pathfinder.r2d(m_left_follower.getHeading());
+      SmartDashboard.putNumber("desired heading", desired_heading);
       double heading_difference = Pathfinder.boundHalfDegrees(desired_heading - heading);
+      SmartDashboard.putNumber("heading difference", heading_difference);
       double turn =  0.8 * (-1.0/80.0) * heading_difference;
+      SmartDashboard.putNumber("turn", turn);
+      SmartDashboard.putNumber("left drive", left_speed + turn);
+      SmartDashboard.putNumber("right drive", right_speed - turn);
+
       drivetrain.drive(left_speed + turn, right_speed - turn);
     }
   }
