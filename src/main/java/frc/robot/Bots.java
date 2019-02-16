@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Bot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -38,26 +39,26 @@ public class Bots {
     // private static DigitalInput jumper;
 
     /**
-     * Configures robot hardware based on DIO Jumper (9)
-     * No Jumper Connection = Competition Robot
-     * Jumper Connected = Test Bot One
+     * Configures robot hardware based on DIO Jumper (9) No Jumper Connection =
+     * Competition Robot Jumper Connected = Test Bot One
+     * 
      * @return corresponding Bot of Rio Jumper
      */
     public static Bot getBotByHardware() {
 
-        //true = OPEN, false = CLOSED (connected)
-        DigitalInput dio9  = new DigitalInput(9);
+        // true = OPEN, false = CLOSED (connected)
+        DigitalInput dio9 = new DigitalInput(9);
         Boolean dio9Connected = !dio9.get();
         dio9.close();
         DigitalInput dio8 = new DigitalInput(8);
         Boolean dio8Connected = !dio8.get();
         dio8.close();
 
-        if(dio9Connected) {
+        if (dio9Connected) {
             System.out.println("running on Test Bot One Hardware");
             SmartDashboard.putString("Hardware Configuration", "Test Bot One");
             return createTestBotOne();
-        } else if(dio8Connected) {
+        } else if (dio8Connected) {
             System.out.println("running on Test Bench Hardware");
             SmartDashboard.putString("Hardware Configuration", "Test Bench Robot");
             return createTestBench();
@@ -69,45 +70,42 @@ public class Bots {
 
     }
 
-    public static Bot createCompetitionBot(){
-        return new Bot(
-            new HashMap<String, Subsystem>() {{
-                put(Bot.DRIVETRAIN, new DriveTrainSubsystem(
-                    new SpeedControllerGroup(new WPI_TalonSRX(2), new WPI_TalonSRX(3)),
-                    new SpeedControllerGroup(new WPI_TalonSRX(4), new WPI_TalonSRX(5)),
-                    new Encoder(2, 3),
-                    new Encoder(0, 1),
-                    null, 
-                    // new Ultrasonic(-1, -1),
-                    new AHRS(SPI.Port.kMXP)
-                    ));
-                put(Bot.PNEUMATICS, new PneumaticsSubsystem(new DoubleSolenoid(1, 0, 1)));
-                put(Bot.BUCKET, new MotorSubsystem(new WPI_VictorSPX(0)));
-            }}
-        );
+    public static Bot createCompetitionBot() {
+        return new Bot(new HashMap<String, Subsystem>() {
+            {
+                put(Bot.DRIVETRAIN,
+                        new DriveTrainSubsystem(new SpeedControllerGroup(new WPI_TalonSRX(2), new WPI_TalonSRX(3)),
+                                new SpeedControllerGroup(new WPI_TalonSRX(4), new WPI_TalonSRX(5)), new Encoder(2, 3),
+                                new Encoder(0, 1), null,
+                                // new Ultrasonic(-1, -1),
+                                new AHRS(SPI.Port.kMXP)));
+                put(Bot.ACTUATOR, new MotorSubsystem(new WPI_TalonSRX(6)));
+
+                // put(Bot.PNEUMATICS, new PneumaticsSubsystem(new DoubleSolenoid(1, 0, 1)));
+                // put(Bot.BUCKET, new MotorSubsystem(new WPI_VictorSPX(6)));
+            }
+        });
     }
 
     public static Bot createTestBotOne() {
-        return new Bot(
-            new HashMap<String, Subsystem>() {{
-                put(Bot.DRIVETRAIN, new DriveTrainSubsystem(
-                            new Spark(0),
-                            new Spark(1),
-                            new Encoder(0, 1),
-                            new Encoder(2, 3),
-                            null, //new Ultrasonic(1, 0),
-                            new AHRS(SPI.Port.kMXP)
-                            ));
+        return new Bot(new HashMap<String, Subsystem>() {
+            {
+                put(Bot.DRIVETRAIN,
+                        new DriveTrainSubsystem(new Spark(0), new Spark(1), new Encoder(0, 1), new Encoder(2, 3), null, // new
+                                                                                                                        // Ultrasonic(1,
+                                                                                                                        // 0),
+                                new AHRS(SPI.Port.kMXP)));
                 put(Bot.ACTUATOR, new MotorSubsystem(new WPI_VictorSPX(8)));
-            }}
-        );
+            }
+        });
     }
 
     public static Bot createTestBench() {
-        return new Bot(new HashMap<String, Subsystem>() {{
-            put(Bot.DRIVETRAIN, new DriveTrainSubsystem(null, null, null, null, null, null));
-        }});
+        return new Bot(new HashMap<String, Subsystem>() {
+            {
+                put(Bot.DRIVETRAIN, new DriveTrainSubsystem(null, null, null, null, null, null));
+            }
+        });
     }
-    
 
 }
