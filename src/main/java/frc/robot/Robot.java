@@ -10,10 +10,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.DoNothing;
+import frc.robot.commands.DriveTo;
 import frc.robot.commands.DriverOperated;
-
+import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.Bot;
 import frc.robot.Bots;
 
@@ -31,10 +34,12 @@ public class Robot extends TimedRobot {
   public static OI m_oi;
 
 
-	Command teleop = new DriverOperated(robot);
+  Command teleop = new DriverOperated(robot);
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+  DriveTrainSubsystem drivetrain;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -43,9 +48,15 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_oi = new OI();
-    // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
+    m_chooser.setDefaultOption("Default Auto", new DriverOperated(robot));
+    m_chooser.addOption("do nothing", new DoNothing());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
+    try {
+      this.drivetrain = (DriveTrainSubsystem) this.robot.getSubsystem(Bot.DRIVETRAIN);
+    } catch (Exception e) {
+      
+    }
   }
 
   /**
@@ -58,6 +69,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    if(this.drivetrain != null){
+      this.drivetrain.putEncodersOnDash();
+      this.drivetrain.putCompassOnDash();
+    }
+
+
   }
 
   /**
@@ -102,6 +119,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
     }
+
   }
 
   /**

@@ -29,7 +29,7 @@ public class DriverOperated extends Command {
   private MotorSubsystem suck;
   private PneumaticsSubsystem pneumatics;
   private boolean finishEarly = false;
-	private double driveSpeedFactor = .65;
+	private double driveSpeedFactor = .45;
 	private boolean facingForward = true;
 
   public DriverOperated(Bot robot) {
@@ -79,7 +79,8 @@ public class DriverOperated extends Command {
   protected void execute() {
 
     //boosts robot speed when HOLDING right bumper
-    OperatorInterface.setButtonFunction(ButtonName.RB, true, new ButtonFunction(){
+    OperatorInterface.setButtonFunction(ButtonName.RB, true, 
+    new ButtonFunction(){
       @Override
       public void call() {
         boostSpeed();
@@ -183,11 +184,11 @@ public class DriverOperated extends Command {
   }
 
   private void boostSpeed() {
-    this.driveSpeedFactor = 1.0;
+    this.driveSpeedFactor = 0.85;
   }
 
   private void reduceSpeed() {
-    this.driveSpeedFactor = .65;
+    this.driveSpeedFactor = .45;
   }
 
   private void arcadeDrive(double rightStickX, double rightStickY) {
