@@ -129,7 +129,10 @@ public class DriveTrainSubsystem extends Subsystem {
     }
 
     public double returnUltrasonicVal (){  
-        return sonic.getRangeInches();
+        if(sonic != null)
+            return sonic.getRangeInches();
+        else 
+            return -1;
     }
 
     public void sonicSetAutomatic(){
