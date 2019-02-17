@@ -29,41 +29,34 @@ public class DriverOperated extends Command {
   private MotorSubsystem suck;
   private PneumaticsSubsystem pneumatics;
   private boolean finishEarly = false;
-	private double driveSpeedFactor = .45;
-	private boolean facingForward = true;
+  private double driveSpeedFactor = .45;
+  private boolean facingForward = true;
 
   public DriverOperated(Bot robot) {
     this.robot = robot;
     try {
       this.drivetrain = (DriveTrainSubsystem) this.robot.getSubsystem(Bot.DRIVETRAIN);
-      System.out.println("GOT DRIVETRAIN!");
-    } catch( Exception e) {
+    } catch (Exception e) {
       this.finishEarly = true;
     }
     try {
       this.pneumatics = (PneumaticsSubsystem) this.robot.getSubsystem(Bot.PNEUMATICS);
-    } catch( Exception e) {
+    } catch (Exception e) {
       this.finishEarly = true;
     }
-
-    // try {
-    //   this.bucket = (MotorSubsystem) this.robot.getSubsystem(Bot.BUCKET);
-    // }catch(Exception e){
-    //   this.finishEarly = true;
-    // }
     try {
       this.actuator = (MotorSubsystem) this.robot.getSubsystem(Bot.ACTUATOR);
-    }catch(Exception e){
+    } catch (Exception e) {
       this.finishEarly = true;
     }
     try {
       this.bucket = (MotorSubsystem) this.robot.getSubsystem(Bot.BUCKET);
-    }catch(Exception e){
+    } catch (Exception e) {
       this.finishEarly = true;
     }
     try {
       this.suck = (MotorSubsystem) this.robot.getSubsystem(Bot.SUCK);
-    }catch(Exception e){
+    } catch (Exception e) {
       this.finishEarly = true;
     }
   }
@@ -78,14 +71,13 @@ public class DriverOperated extends Command {
   @Override
   protected void execute() {
 
-    //boosts robot speed when HOLDING right bumper
-    OperatorInterface.setButtonFunction(ButtonName.RB, true, 
-    new ButtonFunction(){
+    // boosts robot speed when HOLDING right bumper
+    OperatorInterface.setButtonFunction(ButtonName.RB, true, new ButtonFunction() {
       @Override
       public void call() {
         boostSpeed();
       }
-    }, new ButtonFunction(){
+    }, new ButtonFunction() {
       @Override
       public void call() {
         reduceSpeed();
@@ -93,23 +85,10 @@ public class DriverOperated extends Command {
     });
 
     // //arcade drive
-    // OperatorInterface.setAxisFunction(AxisName.LEFTSTICKY, true, new AxisFunction(){
-    //   @Override
-    //   public void call(Double leftStickY) {
-    //     OperatorInterface.setAxisFunction(AxisName.RIGHTSTICKX, true, new AxisFunction(){
-    //       @Override
-    //       public void call(Double rightStickX) {
-    //         arcadeDrive(rightStickX, leftStickY * -1);
-    //       }
-    //     });
-    //   }
-    // });
-
-        // //arcade drive
-    OperatorInterface.setAxisFunction(AxisName.LEFTSTICKY, false, new AxisFunction(){
+    OperatorInterface.setAxisFunction(AxisName.LEFTSTICKY, true, new AxisFunction() {
       @Override
       public void call(Double leftStickY) {
-        OperatorInterface.setAxisFunction(AxisName.RIGHTSTICKX, false, new AxisFunction(){
+        OperatorInterface.setAxisFunction(AxisName.RIGHTSTICKX, true, new AxisFunction() {
           @Override
           public void call(Double rightStickX) {
             arcadeDrive(rightStickX, leftStickY * -1);
@@ -118,64 +97,39 @@ public class DriverOperated extends Command {
       }
     });
 
-    //pneumatic drive
-    OperatorInterface.setPOVFunction(true, new POVFunction(){
+    // pneumatic drive
+    OperatorInterface.setPOVFunction(false, new POVFunction() {
       @Override
       public void call(int pov) {
         drivePneumatics(pov);
       }
     });
 
-
-    // OperatorInterface.setAxisFunction(AxisName.RIGHTTRIGGER,false, new AxisFunction(){
-    //   @Override
-    //   public void call(Double rightTrigger){
-    //     OperatorInterface.setAxisFunction(AxisName.LEFTTRIGGER ,false, new AxisFunction(){
-    //       @Override
-    //       public void call(Double leftTrigger){
-    //         if(rightTrigger > 0 && leftTrigger > 0){
-              
-    //         }else if(rightTrigger > 0){
-    //           bucketRun(rightTrigger);
-    //         }else if(leftTrigger > 0){
-    //           bucketRun(-leftTrigger);
-    //         }
-    //       }
-    //     });
-    //   }
-    // });
-
-    //ACTUATOR DRIVER CODE
-    // if (ButtonA) {
-    //   actuator.powerMotor(-0.3);
-    // } else if(ButtonY) {
-    //   actuator.powerMotor(0.3);
-    // } else {
-    //   actuator.powerMotor(0);
-    // }
-
-    OperatorInterface.setAxisFunction(AxisName.LEFTSTICKY, true, new AxisFunction(){
+    //actuator drive
+    OperatorInterface.setAxisFunction(AxisName.LEFTSTICKY, false, new AxisFunction() {
       @Override
       public void call(Double axisValue) {
         driveActuator(-axisValue);
       }
     });
 
-    OperatorInterface.setAxisFunction(AxisName.RIGHTSTICKY, true, new AxisFunction(){
+    //bucket drive
+    OperatorInterface.setAxisFunction(AxisName.RIGHTSTICKY, false, new AxisFunction() {
       @Override
       public void call(Double axisValue) {
         powerBucket(axisValue);
       }
     });
 
-    OperatorInterface.setAxisFunction(AxisName.RIGHTTRIGGER, true, new AxisFunction(){
+    //suction control
+    OperatorInterface.setAxisFunction(AxisName.RIGHTTRIGGER, false, new AxisFunction() {
       @Override
       public void call(Double rightTrigger) {
-        OperatorInterface.setAxisFunction(AxisName.LEFTTRIGGER, true, new AxisFunction(){
+        OperatorInterface.setAxisFunction(AxisName.LEFTTRIGGER, false, new AxisFunction() {
           @Override
           public void call(Double leftTrigger) {
-              driveSuck(rightTrigger - leftTrigger);
-              // System.out.println(rightTrigger - leftTrigger);
+            driveSuck(rightTrigger - leftTrigger);
+            // System.out.println(rightTrigger - leftTrigger);
           }
         });
       }
@@ -195,22 +149,22 @@ public class DriverOperated extends Command {
     this.drivetrain.arcadeDrive(rightStickY * driveSpeedFactor, rightStickX * driveSpeedFactor);
   }
 
-  private void powerBucket(Double power){
+  private void powerBucket(Double power) {
     this.bucket.powerMotor(power);
   }
 
   private void drivePneumatics(int pov) {
-    if(pov == 0) {
+    if (pov == 0) {
       pneumatics.setDirectionForward();
-    } else if(pov == 180) {
+    } else if (pov == 180) {
       pneumatics.setDirectionReverse();
-    } else if(pov == 90 || pov == 270) {
+    } else if (pov == 90 || pov == 270) {
       pneumatics.setSolenoidOff();
     }
   }
 
   private void driveActuator(Double power) {
-    if(power > 0.0) {
+    if (power > 0.0) {
       this.actuator.powerMotor(power * 0.8);
     } else {
       this.actuator.powerMotor(power * 0.3);

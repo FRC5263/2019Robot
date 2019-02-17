@@ -44,9 +44,9 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	
-	public Joystick operatorGamepad = new Joystick(0);
+	public Joystick driverGamepad = new Joystick(0);
 	
-	public Joystick driverGamepad = new Joystick(1);
+	public Joystick operatorGamepad = new Joystick(1);
 	
 	Button rightBumper = new JoystickButton(operatorGamepad, 6);
 	
