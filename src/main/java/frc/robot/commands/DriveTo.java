@@ -24,6 +24,16 @@ public class DriveTo extends Command {
     double power;
     double seconds;
 
+
+    /**
+     * Creates a new drive function, with a angle to correct to
+     * 
+     * @param robot                 The robot that will be driven
+     * @param driveDistanceFeet     Distance that you want the robot to drive
+     * @param power                 The power at which the robot will drive
+     * @param angle                 The angle you wish to correct to while driving
+     * @param seconds               After x number of seconds this function will timeout          
+     */
     public DriveTo(Bot robot, double driveDistanceFeet, double power, double angle, double seconds) {
         this.robot = robot;
         try {
@@ -40,6 +50,14 @@ public class DriveTo extends Command {
         setTimeout(seconds);
     }
 
+    /**
+     * Create a new drive to object 
+     * 
+     * @param robot             The robot that will be driven
+     * @param driveDistanceFeet Distance that you want the robot to drive 
+     * @param power             The power at which the robot will drive 
+     * @param seconds           After x number of seconds this function will timeout
+     */
     public DriveTo(Bot robot, double driveDistanceFeet, double power, double seconds) {
         this.robot = robot;
         try {
@@ -80,8 +98,8 @@ public class DriveTo extends Command {
 
         encoderTarget = direction * (driveDistanceFeet * 12);
         // -1 * negative = positive
-
-        // DriveTrain.getLeftEncoder()
+   
+        // DriveTrain.getLeftEncoder()   
         if (this.drivetrain.getLeftEncoderInches() * direction < encoderTarget) {
             this.drivetrain.drive((direction * power) + leftCorrection,
                     (direction * power) + rightCorrection);
