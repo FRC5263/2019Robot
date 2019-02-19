@@ -7,9 +7,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -58,6 +60,13 @@ public class Robot extends TimedRobot {
     } catch (Exception e) {
       
     }
+
+    try{
+      UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+      camera.setResolution(640, 480);
+    }catch(Exception e){
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -73,6 +82,7 @@ public class Robot extends TimedRobot {
     if(this.drivetrain != null){
       this.drivetrain.putEncodersOnDash();
       this.drivetrain.putCompassOnDash();
+      this.drivetrain.putUltrasonicOnDash();
     }
 
 

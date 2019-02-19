@@ -76,8 +76,8 @@ public class Bots {
                 put(Bot.DRIVETRAIN,
                         new DriveTrainSubsystem(new SpeedControllerGroup(new WPI_TalonSRX(2), new WPI_TalonSRX(3)),
                                 new SpeedControllerGroup(new WPI_TalonSRX(4), new WPI_TalonSRX(5)), new Encoder(2, 3),
-                                new Encoder(0, 1), null,
-                                // new Ultrasonic(-1, -1),
+                                new Encoder(0, 1),
+                                new Ultrasonic(4, 5),
                                 new AHRS(SPI.Port.kMXP)));
                 put(Bot.ACTUATOR, new MotorSubsystem(new WPI_TalonSRX(6)));
                 put(Bot.BUCKET, new MotorSubsystem(new WPI_TalonSRX(7)));
@@ -91,7 +91,7 @@ public class Bots {
         return new Bot(new HashMap<String, Subsystem>() {
             {
                 put(Bot.DRIVETRAIN,
-                        new DriveTrainSubsystem(new Spark(0), new Spark(1), new Encoder(0, 1), new Encoder(2, 3), null, // new
+                        new DriveTrainSubsystem(new Spark(0), new Spark(1), new Encoder(0, 1), new Encoder(2, 3), new Ultrasonic(4, 5),// new
                                                                                                                         // Ultrasonic(1,
                                                                                                                         // 0),
                                 new AHRS(SPI.Port.kMXP)));
