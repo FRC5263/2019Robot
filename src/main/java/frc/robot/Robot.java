@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DoNothing;
+import frc.robot.commands.DriveMotor;
 import frc.robot.commands.DriveTo;
 import frc.robot.commands.DriverOperated;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -48,9 +49,9 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_oi = new OI();
-    m_chooser.setDefaultOption("Default Auto", new DriverOperated(robot));
+    m_chooser.setDefaultOption("Default Auto - Teleop", new DriverOperated(robot));
     m_chooser.addOption("do nothing", new DoNothing());
-    // chooser.addOption("My Auto", new MyAutoCommand());
+    m_chooser.addOption("suck for 5 sec", new DriveMotor(robot, Bot.SUCK, 1.0, 5));
     SmartDashboard.putData("Auto mode", m_chooser);
     try {
       this.drivetrain = (DriveTrainSubsystem) this.robot.getSubsystem(Bot.DRIVETRAIN);
