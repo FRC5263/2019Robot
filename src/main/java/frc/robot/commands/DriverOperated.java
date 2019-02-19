@@ -114,7 +114,7 @@ public class DriverOperated extends Command {
     });
 
     //This number scales down the power of the bucket motor
-    double bucketPowerOffset = .5;
+    double bucketPowerOffset = .75;
 
     //bucket drive
     OperatorInterface.setAxisFunction(AxisName.RIGHTSTICKY, false, new AxisFunction() {
