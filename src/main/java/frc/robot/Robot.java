@@ -162,8 +162,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-
-    SmartDashboard.putNumber("Servo true", test.getAngle());
     this.drivetrain.putServoOnDash();
     Scheduler.getInstance().run();
   }
