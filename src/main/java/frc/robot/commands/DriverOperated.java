@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Bot;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -71,6 +72,8 @@ public class DriverOperated extends Command {
   @Override
   protected void execute() {
 
+
+    System.out.println(drivetrain.getServo());
     // boosts robot speed when HOLDING right bumper
     OperatorInterface.setButtonFunction(ButtonName.RB, true, new ButtonFunction() {
       @Override
@@ -81,6 +84,33 @@ public class DriverOperated extends Command {
       @Override
       public void call() {
         reduceSpeed();
+      }
+    });
+
+    OperatorInterface.setButtonExtra(ButtonName.A, new ButtonFunction(){
+    
+      @Override
+      public void call() {
+        System.out.println("A");
+        setAngle(0);
+      }
+    });
+
+    OperatorInterface.setButtonExtra(ButtonName.B, new ButtonFunction(){
+    
+      @Override
+      public void call() {
+        System.out.println("B");
+        setAngle(45);
+      }
+    });
+
+    OperatorInterface.setButtonExtra(ButtonName.Y, new ButtonFunction(){
+    
+      @Override
+      public void call() {
+        System.out.println("Y");
+        setAngle(90);
       }
     });
 
@@ -96,6 +126,7 @@ public class DriverOperated extends Command {
         });
       }
     });
+
 
     // pneumatic drive
     OperatorInterface.setPOVFunction(false, new POVFunction() {
@@ -138,6 +169,10 @@ public class DriverOperated extends Command {
       }
     });
 
+  }
+
+  private void setAngle(int angle){
+    this.drivetrain.setRotation(angle);
   }
 
   private void boostSpeed() {

@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
-
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Spark;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -78,7 +78,8 @@ public class Bots {
                                 new SpeedControllerGroup(new WPI_TalonSRX(4), new WPI_TalonSRX(5)), new Encoder(2, 3),
                                 new Encoder(0, 1),
                                 new Ultrasonic(4, 5),
-                                new AHRS(SPI.Port.kMXP)));
+                                new AHRS(SPI.Port.kMXP),
+                                null));
                 put(Bot.ACTUATOR, new MotorSubsystem(new WPI_TalonSRX(6)));
                 put(Bot.BUCKET, new MotorSubsystem(new WPI_TalonSRX(7)));
                 put(Bot.SUCK, new MotorSubsystem(new WPI_VictorSPX(8)));
@@ -94,7 +95,7 @@ public class Bots {
                         new DriveTrainSubsystem(new Spark(0), new Spark(1), new Encoder(0, 1), new Encoder(2, 3), new Ultrasonic(4, 5),// new
                                                                                                                         // Ultrasonic(1,
                                                                                                                         // 0),
-                                new AHRS(SPI.Port.kMXP)));
+                                new AHRS(SPI.Port.kMXP), new Servo(2)));
                 put(Bot.ACTUATOR, new MotorSubsystem(new WPI_VictorSPX(8)));
             }
         });
@@ -103,7 +104,7 @@ public class Bots {
     public static Bot createTestBench() {
         return new Bot(new HashMap<String, Subsystem>() {
             {
-                put(Bot.DRIVETRAIN, new DriveTrainSubsystem(null, null, null, null, null, null));
+                put(Bot.DRIVETRAIN, new DriveTrainSubsystem(null, null, null, null, null, null, null));
             }
         });
     }

@@ -19,6 +19,7 @@ import com.kauailabs.navx.frc.AHRS;
 //import libraries
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.Servo;
 
 /**
  * Subsystem for controlling drive wheels and drive-related sensors.
@@ -32,6 +33,7 @@ public class DriveTrainSubsystem extends Subsystem {
     private Ultrasonic sonic;
     private Encoder leftEncoder;
     private Encoder rightEncoder;
+    private Servo servo;
 
     // constants
     private final static double wheelDiameterInches = 8.0;
@@ -40,7 +42,8 @@ public class DriveTrainSubsystem extends Subsystem {
     private final static double ultrasonicOffset = 13;
 
     public DriveTrainSubsystem(SpeedController leftDrive, SpeedController rightDrive, Encoder leftEncoder,
-            Encoder rightEncoder, Ultrasonic ultrasonic, AHRS navx) {
+            Encoder rightEncoder, Ultrasonic ultrasonic, AHRS navx, Servo servo) {
+        this.servo = servo;
         this.leftMotors = leftDrive;
         this.rightMotors = rightDrive;
         this.leftEncoder = leftEncoder;
@@ -55,6 +58,15 @@ public class DriveTrainSubsystem extends Subsystem {
 
     @Override
     public void initDefaultCommand() {
+    }
+
+    public Double getServo(){
+        return servo.getAngle();
+    }
+
+    public void setRotation(int angle){
+        System.out.println("SHOULD BE WORKING??? DriveTrain");
+        servo.setAngle(angle);
     }
 
     public double getRotation() {
@@ -138,6 +150,10 @@ public class DriveTrainSubsystem extends Subsystem {
     public void sonicSetAutomatic(){
         if(sonic != null)
             sonic.setAutomaticMode(true); 
+    }
+    
+    public void putServoOnDash(){
+        SmartDashboard.putNumber("Servo", getServo());
     }
 
     public void putEncodersOnDash() {

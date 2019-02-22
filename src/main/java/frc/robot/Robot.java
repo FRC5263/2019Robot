@@ -20,6 +20,7 @@ import frc.robot.commands.DriveMotor;
 import frc.robot.commands.DriveTo;
 import frc.robot.commands.DriverOperated;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import edu.wpi.first.wpilibj.Servo;
 import frc.robot.Bot;
 import frc.robot.Bots;
 
@@ -32,7 +33,7 @@ import frc.robot.Bots;
  */
 public class Robot extends TimedRobot {
 
-  Bot robot = Bots.createCompetitionBot();
+  Bot robot = Bots.createTestBotOne();
 
   public static OI m_oi;
 
@@ -54,6 +55,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto - Teleop", new DriverOperated(robot));
     m_chooser.addOption("do nothing", new DoNothing());
     m_chooser.addOption("suck for 5 sec", new DriveMotor(robot, Bot.SUCK, 1.0, 5));
+    m_chooser.addOption("Drive forward 5 feet", new DriveTo(robot, 5, .5, 0, 3));
     SmartDashboard.putData("Auto mode", m_chooser);
     try {
       this.drivetrain = (DriveTrainSubsystem) this.robot.getSubsystem(Bot.DRIVETRAIN);
@@ -83,6 +85,7 @@ public class Robot extends TimedRobot {
       this.drivetrain.putEncodersOnDash();
       this.drivetrain.putCompassOnDash();
       this.drivetrain.putUltrasonicOnDash();
+      this.drivetrain.putServoOnDash();
     }
 
 
@@ -140,7 +143,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
   }
-
+  
   @Override
   public void teleopInit() {
     // This makes sure that the autonomous stops running when
@@ -159,6 +162,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+
+    SmartDashboard.putNumber("Servo true", test.getAngle());
+    this.drivetrain.putServoOnDash();
     Scheduler.getInstance().run();
   }
 

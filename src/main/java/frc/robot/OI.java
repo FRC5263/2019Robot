@@ -47,6 +47,8 @@ public class OI {
 	public Joystick driverGamepad = new Joystick(0);
 	
 	public Joystick operatorGamepad = new Joystick(1);
+
+	public Joystick extraGamepad = new Joystick(2);
 	
 	Button rightBumper = new JoystickButton(operatorGamepad, 6);
 	
@@ -69,6 +71,10 @@ public class OI {
 		private AxisName(int value) {
 			this.value = value;
 		}
+	}
+
+	public boolean getExtraButton(ButtonName buttonName) {
+		return extraGamepad.getRawButton(buttonName.value);
 	}
 
 	public boolean getOperatorButton(ButtonName buttonName) {
