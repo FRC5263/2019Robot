@@ -50,6 +50,7 @@ public class DriveTrainSubsystem extends Subsystem {
         this.rightEncoder = rightEncoder;
         this.sonic = ultrasonic;
         this.navx = navx;
+        this.servo = servo;
         if (this.leftMotors != null && this.rightMotors != null)
             this.drivetrain = new DifferentialDrive(this.leftMotors, this.rightMotors);
         else
@@ -61,7 +62,10 @@ public class DriveTrainSubsystem extends Subsystem {
     }
 
     public Double getServo(){
+        if(servo != null){
         return servo.getAngle();
+        }
+        return -1.0;
     }
 
     public void setRotation(int angle){

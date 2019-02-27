@@ -33,7 +33,7 @@ import frc.robot.Bots;
  */
 public class Robot extends TimedRobot {
 
-  Bot robot = Bots.createTestBotOne();
+  Bot robot = Bots.createCompetitionBot();
 
   public static OI m_oi;
 
