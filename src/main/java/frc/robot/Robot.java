@@ -19,6 +19,7 @@ import frc.robot.commands.DoNothing;
 import frc.robot.commands.DriveMotor;
 import frc.robot.commands.DriveTo;
 import frc.robot.commands.DriverOperated;
+import frc.robot.commands.Rotate;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj.Servo;
 import frc.robot.Bot;
@@ -56,6 +57,7 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("do nothing", new DoNothing());
     m_chooser.addOption("suck for 5 sec", new DriveMotor(robot, Bot.SUCK, 1.0, 5));
     m_chooser.addOption("Drive forward 5 feet", new DriveTo(robot, 5, .5, 0, 3));
+    m_chooser.addOption("Rotate", new Rotate(robot, 720, 0.3, 15));
     SmartDashboard.putData("Auto mode", m_chooser);
     try {
       this.drivetrain = (DriveTrainSubsystem) this.robot.getSubsystem(Bot.DRIVETRAIN);
@@ -121,8 +123,9 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
 		teleop.cancel();
     m_autonomousCommand = m_chooser.getSelected();
-
-    /*
+    try{
+    ((DriveTrainSubsystem)robot.getSubsystem(Bot.DRIVETRAIN)).resetCompass();
+    }catch(Exception E){System.out.println("Could not reset compass");} /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
      * = new MyAutoCommand(); break; case "Default Auto": default:

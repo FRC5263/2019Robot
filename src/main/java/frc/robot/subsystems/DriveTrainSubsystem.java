@@ -51,8 +51,9 @@ public class DriveTrainSubsystem extends Subsystem {
         this.sonic = ultrasonic;
         this.navx = navx;
         this.servo = servo;
-        if (this.leftMotors != null && this.rightMotors != null)
-            this.drivetrain = new DifferentialDrive(this.leftMotors, this.rightMotors);
+        System.out.println("Initalized DriveTrainSubsystem");
+         if (this.leftMotors != null && this.rightMotors != null)
+           this.drivetrain = new DifferentialDrive(this.leftMotors, this.rightMotors);
         else
             this.drivetrain = null;
     }
