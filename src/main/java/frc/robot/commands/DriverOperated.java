@@ -111,19 +111,18 @@ public class DriverOperated extends Command {
     OperatorInterface.setAxisFunction(AxisName.RIGHTTRIGGER, true, new AxisFunction(){
     
       @Override
-      public void call(Double axisValue) {
-        panelDrive(axisValue);
+      public void call(Double axisValue1) {
+        //On driver controller - lower panel
+        OperatorInterface.setAxisFunction(AxisName.LEFTTRIGGER, true, new AxisFunction(){
+        
+          @Override
+          public void call(Double axisValue2) {
+            panelDrive(axisValue1 - axisValue2);
+          }
+        });
       }
     });
 
-    //On driver controller - lower panel
-    OperatorInterface.setAxisFunction(AxisName.LEFTTRIGGER, true, new AxisFunction(){
-    
-      @Override
-      public void call(Double axisValue) {
-        panelDrive(-axisValue);
-      }
-    });
 
     // pneumatic drive
     OperatorInterface.setPOVFunction(false, new POVFunction() {
