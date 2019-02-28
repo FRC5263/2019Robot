@@ -107,6 +107,23 @@ public class DriverOperated extends Command {
       }
     });
 
+    //On driver controller - out panel
+    OperatorInterface.setAxisFunction(AxisName.RIGHTTRIGGER, true, new AxisFunction(){
+    
+      @Override
+      public void call(Double axisValue) {
+        panelDrive(axisValue);
+      }
+    });
+
+    //On driver controller - lower panel
+    OperatorInterface.setAxisFunction(AxisName.LEFTTRIGGER, true, new AxisFunction(){
+    
+      @Override
+      public void call(Double axisValue) {
+        panelDrive(-axisValue);
+      }
+    });
 
     // pneumatic drive
     OperatorInterface.setPOVFunction(false, new POVFunction() {
@@ -149,6 +166,10 @@ public class DriverOperated extends Command {
       }
     });
 
+  }
+
+  private void panelDrive(double power){
+    panel.powerMotor(power);
   }
 
   private void setAngle(int angle){
