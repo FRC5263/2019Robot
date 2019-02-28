@@ -92,7 +92,11 @@ public class OI {
 	public double getOperatorAxis(AxisName axisName) {
 		return operatorGamepad.getRawAxis(axisName.value);
 	}
-	  
+
+	public double getExtraAxis(AxisName axisName){
+		return extraGamepad.getRawAxis(axisName.value);
+	}
+
 	public int getDriverPOV() {
 		return driverGamepad.getPOV();
 	}

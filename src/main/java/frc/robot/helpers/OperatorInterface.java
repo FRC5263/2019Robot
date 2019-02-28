@@ -16,17 +16,6 @@ import frc.robot.helpers.AxisFunction;
 
 public class OperatorInterface {
 
-    public static void setButtonExtra(ButtonName button, ButtonFunction function) {
-        if (Robot.m_oi.getExtraButton(button)) {
-            System.out.println("Should have run OperatorInterface");
-                try {
-                    function.call();
-                } catch (Exception e) {
-                    System.out.println("Could not run " + function.toString());
-                }
-            }
-    }
-
     public static void setButtonFunction(ButtonName button, boolean driverController, ButtonFunction function) {
         if (driverController) {
             if (Robot.m_oi.getDriverButton(button)) {
@@ -77,6 +66,14 @@ public class OperatorInterface {
                     System.out.println("Could not run " + falsyFunction.toString());
                 }
             }
+        }
+    }
+
+    public static void setAxisFunctionExtra(AxisName axisName, AxisFunction function) {
+        try{
+            function.call(Robot.m_oi.getExtraAxis(axisName));
+        }catch(Exception e){
+            System.out.println("Could not run" + function.toString());
         }
     }
 

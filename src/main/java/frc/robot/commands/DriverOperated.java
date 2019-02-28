@@ -28,6 +28,7 @@ public class DriverOperated extends Command {
   private MotorSubsystem actuator;
   private MotorSubsystem bucket;
   private MotorSubsystem suck;
+  private MotorSubsystem panel;
   private PneumaticsSubsystem pneumatics;
   private boolean finishEarly = false;
   private double driveSpeedFactor = .45;
@@ -60,6 +61,11 @@ public class DriverOperated extends Command {
     } catch (Exception e) {
       this.finishEarly = true;
     }
+    try{
+      this.panel = (MotorSubsystem) this.robot.getSubsystem(Bot.PANEL);
+    }catch(Exception e){
+      this.finishEarly = true;
+    }
   }
 
   // Called just before this Command runs the first time
@@ -87,32 +93,6 @@ public class DriverOperated extends Command {
       }
     });
 
-    OperatorInterface.setButtonExtra(ButtonName.A, new ButtonFunction(){
-    
-      @Override
-      public void call() {
-        System.out.println("A");
-        setAngle(0);
-      }
-    });
-
-    OperatorInterface.setButtonExtra(ButtonName.B, new ButtonFunction(){
-    
-      @Override
-      public void call() {
-        System.out.println("B");
-        setAngle(45);
-      }
-    });
-
-    OperatorInterface.setButtonExtra(ButtonName.Y, new ButtonFunction(){
-    
-      @Override
-      public void call() {
-        System.out.println("Y");
-        setAngle(90);
-      }
-    });
 
     // //arcade drive
     OperatorInterface.setAxisFunction(AxisName.LEFTSTICKY, true, new AxisFunction() {
