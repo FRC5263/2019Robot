@@ -22,6 +22,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.VictorSP;
+
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Servo;
@@ -83,6 +85,7 @@ public class Bots {
                 put(Bot.ACTUATOR, new MotorSubsystem(new WPI_TalonSRX(6)));
                 put(Bot.BUCKET, new MotorSubsystem(new WPI_TalonSRX(7)));
                 put(Bot.SUCK, new MotorSubsystem(new WPI_VictorSPX(8)));
+                put(Bot.PANEL, new MotorSubsystem(new VictorSP(9)));
                 put(Bot.PNEUMATICS, new PneumaticsSubsystem(new DoubleSolenoid(1, 0, 1)));
             }
         });
