@@ -79,7 +79,7 @@ public class DriverOperated extends Command {
   protected void execute() {
 
 
-    System.out.println(drivetrain.getServo());
+    // System.out.println(drivetrain.getServo());
     // boosts robot speed when HOLDING right bumper
     OperatorInterface.setButtonFunction(ButtonName.RB, true, new ButtonFunction() {
       @Override
@@ -117,7 +117,7 @@ public class DriverOperated extends Command {
         
           @Override
           public void call(Double axisValue2) {
-            panelDrive(axisValue1 - axisValue2);
+            panelDrive(0.3 * (axisValue1 - axisValue2));
           }
         });
       }
@@ -140,14 +140,11 @@ public class DriverOperated extends Command {
       }
     });
 
-    //This number scales down the power of the bucket motor
-    double bucketPowerOffset = .75;
-
     //bucket drive
     OperatorInterface.setAxisFunction(AxisName.RIGHTSTICKY, false, new AxisFunction() {
       @Override
       public void call(Double axisValue) {
-        powerBucket(axisValue * bucketPowerOffset);
+        powerBucket(axisValue * .875);
       }
     });
 
@@ -158,7 +155,7 @@ public class DriverOperated extends Command {
         OperatorInterface.setAxisFunction(AxisName.LEFTTRIGGER, false, new AxisFunction() {
           @Override
           public void call(Double leftTrigger) {
-            driveSuck(rightTrigger - leftTrigger);
+            driveSuck(0.5 * (leftTrigger - rightTrigger));
             // System.out.println(rightTrigger - leftTrigger);
           }
         });

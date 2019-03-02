@@ -23,6 +23,7 @@ public class PneumaticsSubsystem extends Subsystem {
 
   public PneumaticsSubsystem(DoubleSolenoid doubleSolenoid) {
     this.solenoid = doubleSolenoid;
+    this.solenoid.set(Value.kOff);
   }
 
   @Override

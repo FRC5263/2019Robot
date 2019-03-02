@@ -67,7 +67,10 @@ public class Robot extends TimedRobot {
 
     try{
       UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-      camera.setResolution(640, 480);
+      UsbCamera backCamera = CameraServer.getInstance().startAutomaticCapture();
+      camera.setResolution(256, 144);
+      backCamera.setResolution(256, 144);
+      System.out.println("Camera should be happy");
     }catch(Exception e){
       e.printStackTrace();
     }
@@ -89,7 +92,6 @@ public class Robot extends TimedRobot {
       this.drivetrain.putUltrasonicOnDash();
       this.drivetrain.putServoOnDash();
     }
-
 
   }
 
@@ -136,7 +138,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
     }
-
+    drivetrain.resetCompass();
   }
 
   /**

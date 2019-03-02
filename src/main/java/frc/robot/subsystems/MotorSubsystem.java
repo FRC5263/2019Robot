@@ -32,6 +32,17 @@ public class MotorSubsystem extends Subsystem {
       this.motor.set(power);
   }
 
+  //untested
+  public void curvePowerMotor(double power){
+    double adjustedPower = Math.pow(Math.abs(power), (1.0 / 3.0));
+    if (power < 0) {
+        adjustedPower *= -1;
+    }
+    this.motor.set(adjustedPower);
+  }
+
+  
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
