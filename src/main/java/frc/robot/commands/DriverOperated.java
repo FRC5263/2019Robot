@@ -10,6 +10,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Bot;
+import frc.robot.subsystems.DigitalSignalSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.MotorSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
@@ -30,9 +31,10 @@ public class DriverOperated extends Command {
   private MotorSubsystem suck;
   private MotorSubsystem panel;
   private PneumaticsSubsystem pneumatics;
+  private DigitalSignalSubsystem limitSwitch;
   private boolean finishEarly = false;
   private double driveSpeedFactor = .45;
-  private boolean facingForward = true;
+  private double drivingDirection = 1.0;
 
   public DriverOperated(Bot robot) {
     this.robot = robot;
@@ -65,6 +67,11 @@ public class DriverOperated extends Command {
       this.panel = (MotorSubsystem) this.robot.getSubsystem(Bot.PANEL);
     }catch(Exception e){
       this.finishEarly = true;
+    }
+    try{
+      this.limitSwitch = (DigitalSignalSubsystem) this.robot.getSubsystem(Bot.ACTUATOR_LIMITER);
+    } catch (Exception e) {
+      this.finishEarly =true;
     }
   }
 
@@ -107,12 +114,20 @@ public class DriverOperated extends Command {
       }
     });
 
-    //On driver controller - out panel
+    OperatorInterface.setPOVFunction(true, new POVFunction(){
+    
+      @Override
+      public void call(int pov) {
+        drivingDirectionFlip(pov);
+      }
+    });
+
+    //On driver controller - out panel stick
     OperatorInterface.setAxisFunction(AxisName.RIGHTTRIGGER, true, new AxisFunction(){
     
       @Override
       public void call(Double axisValue1) {
-        //On driver controller - lower panel
+        //On driver controller - lower panel stick
         OperatorInterface.setAxisFunction(AxisName.LEFTTRIGGER, true, new AxisFunction(){
         
           @Override
@@ -155,7 +170,7 @@ public class DriverOperated extends Command {
         OperatorInterface.setAxisFunction(AxisName.LEFTTRIGGER, false, new AxisFunction() {
           @Override
           public void call(Double leftTrigger) {
-            driveSuck(0.5 * (leftTrigger - rightTrigger));
+            driveSuck(0.75 * (leftTrigger - rightTrigger));
             // System.out.println(rightTrigger - leftTrigger);
           }
         });
@@ -180,8 +195,8 @@ public class DriverOperated extends Command {
     this.driveSpeedFactor = .45;
   }
 
-  private void arcadeDrive(double rightStickX, double rightStickY) {
-    this.drivetrain.arcadeDrive(rightStickY * driveSpeedFactor, rightStickX * driveSpeedFactor);
+  private void arcadeDrive(double rightStickX, double leftStickY) {
+    this.drivetrain.arcadeDrive(leftStickY * driveSpeedFactor * drivingDirection, rightStickX * driveSpeedFactor);
   }
 
   private void powerBucket(Double power) {
@@ -197,10 +212,21 @@ public class DriverOperated extends Command {
       pneumatics.setSolenoidOff();
     }
   }
+  private void drivingDirectionFlip(int pov) {
+    if (pov == 0) {
+      drivingDirection = 1.0;
+    } else if (pov == 180) {
+      drivingDirection = -1.0;
+    }
+  }
 
   private void driveActuator(Double power) {
     if (power > 0.0) {
-      this.actuator.powerMotor(power * 0.8);
+      if(limitSwitch.getDigitalSignal()){
+        this.actuator.powerMotor(power * 0.8);
+      } else {
+        this.actuator.powerMotor(0.0);
+      }
     } else {
       this.actuator.powerMotor(power * 0.3);
     }

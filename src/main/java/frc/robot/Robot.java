@@ -20,6 +20,7 @@ import frc.robot.commands.DriveMotor;
 import frc.robot.commands.DriveTo;
 import frc.robot.commands.DriverOperated;
 import frc.robot.commands.Rotate;
+import frc.robot.subsystems.DigitalSignalSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj.Servo;
 import frc.robot.Bot;
@@ -46,6 +47,9 @@ public class Robot extends TimedRobot {
 
   DriveTrainSubsystem drivetrain;
 
+
+  //TEMPORARY
+  DigitalSignalSubsystem limiter;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -63,6 +67,12 @@ public class Robot extends TimedRobot {
       this.drivetrain = (DriveTrainSubsystem) this.robot.getSubsystem(Bot.DRIVETRAIN);
     } catch (Exception e) {
       
+    }
+
+    try {
+      this.limiter = (DigitalSignalSubsystem) this.robot.getSubsystem(Bot.ACTUATOR_LIMITER);
+    } catch( Exception e) {
+
     }
 
     try{
@@ -92,6 +102,13 @@ public class Robot extends TimedRobot {
       this.drivetrain.putUltrasonicOnDash();
       this.drivetrain.putServoOnDash();
     }
+    // if(this.limiter != null){
+    //   if(this.limiter.getDigitalSignal()) {
+    //     System.out.println("STOP ACTUATOR!!!");
+    //   } else {
+    //     System.out.println("actuator ok");
+    //   }
+    // }
 
   }
 

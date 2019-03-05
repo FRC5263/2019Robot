@@ -23,6 +23,7 @@ public class Bot {
     public static String BUCKET = "bucket";
     public static String SUCK = "suck";
     public static String PANEL = "panel";
+    public static String ACTUATOR_LIMITER = "limiter";
     private Map<String, Subsystem> subsystems = new HashMap<>();
 
     public Bot() {

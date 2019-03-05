@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Bot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.DigitalSignalSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.MotorSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
@@ -87,6 +88,7 @@ public class Bots {
                 put(Bot.SUCK, new MotorSubsystem(new WPI_VictorSPX(8)));
                 put(Bot.PANEL, new MotorSubsystem(new VictorSP(9)));
                 put(Bot.PNEUMATICS, new PneumaticsSubsystem(new DoubleSolenoid(1, 0, 1)));
+                put(Bot.ACTUATOR_LIMITER, new DigitalSignalSubsystem(new DigitalInput(6)));
             }
         });
     }
