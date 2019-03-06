@@ -13,12 +13,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //import hardware
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import com.kauailabs.navx.frc.AHRS;
 
 //import libraries
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.Servo;
 
 /**
@@ -34,6 +36,7 @@ public class DriveTrainSubsystem extends Subsystem {
     private Encoder leftEncoder;
     private Encoder rightEncoder;
     private Servo servo;
+    private Potentiometer yeet;
 
     // constants
     private final static double wheelDiameterInches = 8.0;
@@ -67,6 +70,32 @@ public class DriveTrainSubsystem extends Subsystem {
         return servo.getAngle();
         }
         return -1.0;
+    }
+
+    public double getThePot(){
+        yeet = new Potentiometer(){
+        
+            @Override
+            public void setPIDSourceType(PIDSourceType pidSource) {
+                
+            }
+        
+            @Override
+            public double pidGet() {
+                return 0;
+            }
+        
+            @Override
+            public PIDSourceType getPIDSourceType() {
+                return null;
+            }
+        
+            @Override
+            public double get() {
+                return 0;
+            }
+        };
+        return 1;
     }
 
     public void setRotation(int angle){
