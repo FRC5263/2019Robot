@@ -90,7 +90,7 @@ public class Bots {
                 put(Bot.PANEL, new MotorSubsystem(new VictorSP(9)));
                 put(Bot.PNEUMATICS, new PneumaticsSubsystem(new DoubleSolenoid(1, 0, 1)));
                 put(Bot.ACTUATOR_LIMITER, new DigitalSignalSubsystem(new DigitalInput(6)));
-                put(Bot.Potentiometer, new PotentiometerSubsystem(new AnalogPotentiometer(0, )));
+                put(Bot.POTENTIOMETER, new PotentiometerSubsystem(new AnalogPotentiometer(0, )));
             }
         });
     }
