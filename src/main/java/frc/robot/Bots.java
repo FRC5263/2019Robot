@@ -14,6 +14,7 @@ import frc.robot.subsystems.DigitalSignalSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.MotorSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
+import frc.robot.subsystems.PotentiometerSubsystem;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -89,6 +90,7 @@ public class Bots {
                 put(Bot.PANEL, new MotorSubsystem(new VictorSP(9)));
                 put(Bot.PNEUMATICS, new PneumaticsSubsystem(new DoubleSolenoid(1, 0, 1)));
                 put(Bot.ACTUATOR_LIMITER, new DigitalSignalSubsystem(new DigitalInput(6)));
+                put(Bot.Potentiometer, new PotentiometerSubsystem(new AnalogPotentiometer(0, )));
             }
         });
     }

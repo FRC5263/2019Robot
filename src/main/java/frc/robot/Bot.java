@@ -24,6 +24,7 @@ public class Bot {
     public static String SUCK = "suck";
     public static String PANEL = "panel";
     public static String ACTUATOR_LIMITER = "limiter";
+    public static String Potentiometer = "potentiometer";
     private Map<String, Subsystem> subsystems = new HashMap<>();
 
     public Bot() {
